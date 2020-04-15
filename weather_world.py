@@ -1,55 +1,42 @@
 import os
-import requests
 import datetime
 import cv2
 import numpy as np
 import glob
-import weather_world_mover
+from python_modules import weather_world_mover
+from python_modules import file_open
+from python_modules import file_download
 
 
 def get_image_A():
-    try:
-        f = open('weather_world_setting.txt', mode='r')
-        folderpath = f.readline()
-        os.chdir(folderpath)
-    except FileNotFoundError:
-        f = open('weather_world_setting.txt', mode='x')
-    finally:
-        f.close()
-        a = datetime.datetime.now()
-        if (a.hour >= 12):
-            a = datetime.datetime.now() - datetime.timedelta(hours=a.hour) + \
-                datetime.timedelta(hours=9)
-        else:
-            a = datetime.datetime.now() - datetime.timedelta(days=1) - \
-                datetime.timedelta(hours=a.hour) + datetime.timedelta(hours=21)
-
-        base = a.strftime("%Y%m%d%H")
-        get_image_B('http://wxmaps.org/pix/avnmr', base, 'north-america_')
-        get_image_B('http://wxmaps.org/pix/sa', base, 'south-america_')
-        get_image_B('http://wxmaps.org/pix/euro', base, 'europe_')
-        get_image_B('http://wxmaps.org/pix/ea', base, 'east-asia_')
-        get_image_B('http://wxmaps.org/pix/af', base, 'africa_')
-        get_image_B('http://wxmaps.org/pix/casia', base, 'central-asia_')
-        get_image_B('http://wxmaps.org/pix/aus',
-                    base, 'australia&new-zealand_')
-        get_image_C()
+    file_open.open_file('weather_world_setting.txt')
+    a = datetime.datetime.now()
+    if (a.hour >= 12):
+        a = datetime.datetime.now() - datetime.timedelta(hours=a.hour) + \
+            datetime.timedelta(hours=9)
+    else:
+        a = datetime.datetime.now() - datetime.timedelta(days=1) - \
+            datetime.timedelta(hours=a.hour) + datetime.timedelta(hours=21)
+    base = a.strftime("%Y%m%d%H")
+    get_image_B('http://wxmaps.org/pix/avnmr', base, 'north-america_')
+    get_image_B('http://wxmaps.org/pix/sa', base, 'south-america_')
+    get_image_B('http://wxmaps.org/pix/euro', base, 'europe_')
+    get_image_B('http://wxmaps.org/pix/ea', base, 'east-asia_')
+    get_image_B('http://wxmaps.org/pix/af', base, 'africa_')
+    get_image_B('http://wxmaps.org/pix/casia', base, 'central-asia_')
+    get_image_B('http://wxmaps.org/pix/aus',
+                base, 'australia&new-zealand_')
+    get_image_C()
 
 
 def get_image_B(url_base, base, image_type):
     for i in range(1, 8):
         if not os.path.isfile(image_type+str(i)+'_'+base+'00.png') == True:
             url = url_base + str(i) + '.00hr.png'
+            image_name = image_type+str(i)+'_'+base+'00.png'
             while True:
-                try:
-                    req = requests.get(url)
-                except (ConnectionError, ConnectionAbortedError, ConnectionRefusedError, ConnectionResetError):
-                    pass
-                else:
+                if file_download.download_file(url, image_name) == True:
                     break
-            with open(image_type+str(i)+'_'+base+'00.png', "wb") as w:
-                w.write(req.content)
-                w.close()
 
 
 def get_image_C():
@@ -58,16 +45,10 @@ def get_image_C():
     base = a.strftime("%Y%m%d")
     if not os.path.isfile('ice_'+base+'.png') == True:
         url = 'https://www.natice.noaa.gov/pub/ims/ims_gif/DATA/prvsnow.gif'
+        image_name = 'ice_'+base+'.png'
         while True:
-            try:
-                req = requests.get(url)
-            except (ConnectionError, ConnectionAbortedError, ConnectionRefusedError, ConnectionResetError):
-                pass
-            else:
+            if file_download.download_file(url, image_name) == True:
                 break
-        with open('ice_'+base+'.png', "wb") as w:
-            w.write(req.content)
-            w.close()
 
 
 def edit_image_A():
@@ -91,6 +72,7 @@ def edit_image_B(image_name, image_type):
     cv2.imwrite(image_name, dst)
 
 
-get_image_A()
-edit_image_A()
-weather_world_mover.move_image_A()
+if __name__ == "__main__":
+    get_image_A()
+    edit_image_A()
+    weather_world_mover.move_image_A()
