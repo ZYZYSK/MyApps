@@ -11,8 +11,9 @@ def path_copy():
         try:
             files = os.listdir(m_path)
         except:
-            continue
-        break
+            pass
+        else:
+            break
     files_dir = [f for f in files if os.path.isdir(os.path.join(m_path, f))]
     while True:
         print('コピー先のパスを入力してください：(current:カレントディレクトリ)')
