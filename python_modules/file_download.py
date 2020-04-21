@@ -1,6 +1,5 @@
 import requests
 import urllib
-from time import sleep
 
 
 def check_url(url):
