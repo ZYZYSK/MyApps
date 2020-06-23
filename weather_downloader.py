@@ -56,23 +56,25 @@ def m_download(base, time, url_base, image_type):
     while int(base) <= int(time):
         url = url_base + base + '-00.png'
         image_name = image_type + '_' + base + '.png'
-        if file_download.check_url('https://www.google.com/') == True:
-            if file_download.check_url(url) == True:
+        # インターネット接続確認
+        if file_download.check_url('https://www.jma.go.jp/jma/index.html') == True:
+            if file_download.check_url(url) == True:  # ダウンロードしたいファイルが存在するか
+                # ダウンロード失敗
                 if file_download.download_file(url, image_name) == False:
                     continue
-                else:
+                else:  # ダウンロード成功
                     print('ダウンロード中...')
-            else:
-                try:
-                    if image_type == 'radar':
+            else:  # ダウンロードしたいファイルが存在しない
+                try:  # 前時間のファイルからコピーする
+                    if image_type == 'radar':  # レーダーの場合
                         shutil.copy(image_type + '_' + (datetime.datetime.strptime(base, '%Y%m%d%H%M') - datetime.timedelta(
                             minutes=5)).strftime('%Y%m%d%H%M') + '.png', image_type + '_' + base + '.png')
-                    else:
+                    else:  # それ以外
                         shutil.copy(image_type + '_' + (datetime.datetime.strptime(base, '%Y%m%d%H%M') - datetime.timedelta(
                             minutes=10)).strftime('%Y%m%d%H%M') + '.png', image_type + '_' + base + '.png')
-                except FileNotFoundError:
+                except FileNotFoundError:  # 前時間のファイルも存在しない
                     pass
-            base = base_plus(base, image_type)
+            base = base_plus(base, image_type)  # 時間を進める
         else:
             print('インターネット未接続...')
             sleep(10)
