@@ -11,6 +11,7 @@ def get_image():
     os.makedirs('infrared', exist_ok=True)
     os.makedirs('infrared_earth', exist_ok=True)
     os.makedirs('radar', exist_ok=True)
+    os.makedirs('radar_kyusu', exist_ok=True)
     os.makedirs('visible', exist_ok=True)
     os.makedirs('visible_earth', exist_ok=True)
     os.makedirs('watervapor', exist_ok=True)
@@ -36,6 +37,9 @@ def get_image():
     os.chdir('../radar')
     m_download(
         base, time, 'https://www.jma.go.jp/jp/radnowc/imgs/radar/000/', 'radar')
+    os.chdir('../radar_kyusu')
+    m_download(
+        base, time, 'https://www.jma.go.jp/jp/radnowc/imgs/radar/214/', 'radar_kyusu')
     os.chdir('../visible')
     m_download(
         base, time, 'https://www.jma.go.jp/jp/gms/imgs_c/0/visible/1/', 'visible')
