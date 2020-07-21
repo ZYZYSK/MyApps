@@ -3,13 +3,12 @@ import re
 import serial
 from serial.tools import list_ports
 import time
-import subprocess
 
 
 def main():
     SERIAL_SPEED = 9600
     DEV_NAME = get_devname()
-    BRIGHTNESS_BORDER = 100
+    BRIGHTNESS_BORDER = 30
     print(DEV_NAME)
     old_isdark = -1
     new_isdark = -1
@@ -26,6 +25,8 @@ def main():
                 data.close()
                 brightness = get_number(line)
                 print(brightness)
+                if brightness == -1:
+                    pass
                 if brightness <= BRIGHTNESS_BORDER:
                     new_isdark = 1
                     if new_isdark != old_isdark:
@@ -51,8 +52,13 @@ def get_devname():
 
 
 def get_number(line):
-    brightness = int(re.search('\d+', line.decode()).group())
-    return brightness
+    try:
+        brightness = int(re.search('\d+', line.decode()).group())
+    except Exception as e:
+        print(e)
+        brightness = -1
+    finally:
+        return brightness
 
 
 if __name__ == "__main__":
