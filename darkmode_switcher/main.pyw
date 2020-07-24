@@ -8,7 +8,7 @@ import time
 def main():
     SERIAL_SPEED = 9600
     DEV_NAME = get_devname()
-    BRIGHTNESS_BORDER = 30
+    BRIGHTNESS_BORDER = 20
     print(DEV_NAME)
     old_isdark = -1
     new_isdark = -1
