@@ -27,7 +27,7 @@ def main():
                 print(brightness)
                 if brightness == -1:
                     pass
-                if brightness <= BRIGHTNESS_BORDER:
+                elif brightness <= BRIGHTNESS_BORDER:
                     new_isdark = 1
                     if new_isdark != old_isdark:
                         os.system('powershell -Command'+' ' +
