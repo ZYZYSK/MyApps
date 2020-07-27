@@ -1,5 +1,7 @@
 import os
 import sys
+import urllib
+import time
 
 
 def exit_program(e):
@@ -32,3 +34,24 @@ def move_location(location):  # 画像の保存場所に移動
         print('指定されたパスは存在しません. location.txtを正しく設定してください.')
     except Exception as e:
         exit_program(e)
+
+
+def check_connection():  # ネット接続が確立されるまで待機
+    while True:
+        try:
+            urllib.request.urlopen(
+                'https://www.jma.go.jp/jma/index.html')  # ネット接続を確認
+        except Exception:
+            print('インターネットに接続できません')
+            time.sleep(10)
+        else:
+            break
+
+
+def check_is_on_server(url):  # ダウンロードするファイルがサーバーに存在するか確認
+    try:
+        urllib.request.urlopen(url)
+    except Exception:
+        return False
+    else:
+        return True
