@@ -3,6 +3,7 @@ import re
 import serial
 from serial.tools import list_ports
 import time
+import datetime
 
 
 def main():
@@ -10,6 +11,8 @@ def main():
     BRIGHTNESS_BORDER = 20
     old_isdark = -1
     new_isdark = -1
+    old_time = datetime.datetime.now()-datetime.timedelta(minutes=5)
+    new_time = datetime.datetime.now()
     while True:
         DEV_NAME = get_devname()
         if DEV_NAME == 0:
@@ -24,20 +27,23 @@ def main():
                 data.close()
                 brightness = get_number(line)
                 print(brightness)
+                new_time = datetime.datetime.now()
                 if brightness == -1:
                     pass
-                elif brightness <= BRIGHTNESS_BORDER:
-                    new_isdark = 1
-                    if new_isdark != old_isdark:
-                        os.system('powershell -Command'+' ' +
-                                  'powershell -ExecutionPolicy RemoteSigned .\\darkmode.ps1')
-                    old_isdark = 1
-                else:
-                    new_isdark = 0
-                    if new_isdark != old_isdark:
-                        os.system('powershell -Command'+' ' +
-                                  'powershell -ExecutionPolicy RemoteSigned .\\lightmode.ps1')
-                    old_isdark = 0
+                elif new_time-datetime.timedelta(minutes=5) >= old_time:
+                    if brightness <= BRIGHTNESS_BORDER:
+                        new_isdark = 1
+                        if new_isdark != old_isdark:
+                            os.system('powershell -Command'+' ' +
+                                      'powershell -ExecutionPolicy RemoteSigned .\\darkmode.ps1')
+                        old_isdark = 1
+                    else:
+                        new_isdark = 0
+                        if new_isdark != old_isdark:
+                            os.system('powershell -Command'+' ' +
+                                      'powershell -ExecutionPolicy RemoteSigned .\\lightmode.ps1')
+                        old_isdark = 0
+                    old_time = datetime.datetime.now()
         time.sleep(5)
 
 
