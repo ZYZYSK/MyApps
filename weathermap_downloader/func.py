@@ -6,8 +6,11 @@ import time
 
 def exit_program(e):
     print(e)
-    print("エラーが発生したので終了します.")
-    sys.exit()
+    print("\'q\'で終了します")
+    while True:
+        s = input()
+        if s == "q":
+            sys.exit()
 
 
 def get_location(file_name):  # 画像の保存場所を設定したファイルを読み出す
@@ -31,7 +34,7 @@ def move_location(location):  # 画像の保存場所に移動
         os.chdir(location)
         print(os.getcwd())
     except FileNotFoundError:
-        print('指定されたパスは存在しません. location.txtを正しく設定してください.')
+        exit_program('指定されたパスは存在しません. location.txtを正しく設定してください.')
     except Exception as e:
         exit_program(e)
 

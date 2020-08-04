@@ -3,8 +3,8 @@ import threading
 import shutil
 import requests
 import datetime
-from func1 import *
-DAYS_DURATION = 5  # 何日前のデータからダウンロードするか
+from func import *
+DAYS_DURATION = 6  # 何日前のデータからダウンロードするか
 
 
 class Map:

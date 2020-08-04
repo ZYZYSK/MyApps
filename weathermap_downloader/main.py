@@ -1,4 +1,4 @@
-from func1 import *
+from func import *
 from mapclass import *
 
 
@@ -8,7 +8,7 @@ def main():
     infrared = Map_default_run(
         'infrared', 'https://www.jma.go.jp/jp/gms/imgs_c/0/infrared/1/', Map_default, 10)
     infrared_earth = Map_default_run(
-        'infrared_earth', 'https://www.jma.go.jp/jp/gms/imgs_c/0/infrared/1/', Map_default, 10)
+        'infrared_earth', 'https://www.jma.go.jp/jp/gms/imgs_c/6/infrared/1/', Map_default, 10)
     radar = Map_default_run(
         'radar', 'https://www.jma.go.jp/jp/radnowc/imgs/radar/000/', Map_default, 5)
     visible = Map_default_run(
