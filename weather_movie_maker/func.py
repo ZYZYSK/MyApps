@@ -5,12 +5,16 @@ import time
 import datetime
 
 
-def exit_program(e):
+def exit_program(e, info=None):  # プログラムを終了させる
+    if not info is None:
+        exc_type, exc_obj, exc_tb = info
+        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+        print(exc_type, fname, exc_tb.tb_lineno, '行目')
     print(e)
-    print("\'q\'で終了します")
+    print('\'q\'で終了します')
     while True:
         s = input()
-        if s == "q":
+        if s == 'q':
             sys.exit()
 
 
@@ -25,7 +29,7 @@ def move_location(map_list):  # 画像の保存場所に移動
         except FileNotFoundError:
             print("移動先が見つかりません")
         except Exception as e:
-            exit_program(e)
+            exit_program(e, sys.exc_info)
         else:
             ismaplist = True  # 移動先が正しいかどうか
             for maptype in map_list:
@@ -38,11 +42,11 @@ def move_location(map_list):  # 画像の保存場所に移動
                 break
 
 
-def assign_date():  # 開始日と終了日を入力
-    print("開始日と終了日を入力してください(入力形式:yyyy/mm/dd):")
-    start_day = input().replace('/', '')
-    end_day = input().replace('/', '')
-    return start_day, end_day
+def assign_time():  # 開始日時と終了日時を入力
+    print("開始日時と終了日時を入力してください(入力形式:yyyy/mm/dd/hh/MM):")
+    start_time = input().replace('/', '')
+    end_time = input().replace('/', '')
+    return start_time, end_time
 
 
 def lump():  # 一括作成するかどうか
@@ -53,22 +57,20 @@ def lump():  # 一括作成するかどうか
             return True if s == 'y' else False
 
 
-def check_date(map_name, day_list):  # 開始日と終了日をチェック
-    map_start = map_name + '_' + day_list[0] + '0000.png'
-    map_end = map_name + '_' + day_list[1]
-    map_end = map_end + ('2355.png' if map_name == 'radar' else '2350.png')
+def check_time(map_name, time_list):  # 開始日時と終了日時をチェック
+    if map_name == 'weather_map':
+        return
+    map_start = map_name + '_' + time_list[0] + '.png'
+    map_end = map_name + '_' + time_list[1] + '.png'
     try:
         time_start = datetime.datetime.strptime(
             map_start, map_name + '_%Y%m%d%H%M.png')
         time_end = datetime.datetime.strptime(
             map_end, map_name + '_%Y%m%d%H%M.png')
     except Exception:
-        exit_program(map_name + ":開始日と終了日が正しくありません")
-    # print(time_start.strftime('%Y/%m/%d/%H/%M') +
-    #       ' '+time_end.strftime('%Y/%m/%d/%H/%M'))
-    # print(start + ' ' + end)
-    if not (os.path.isfile(os.path.join(map_name, map_start)) and os.path.isfile(os.path.join(map_name, map_end)) and time_end >= time_start):
-        exit_program(map_name + ":開始日と終了日が正しくありません")
+        exit_program(map_name + ":開始日時と終了日時が正しくありません")
+    if not (os.path.isfile(os.path.join(map_name, map_start)) and time_end >= time_start):
+        exit_program(map_name + ":開始日時と終了日時が正しくありません")
 
 
 def get_map_name(map_list):  # 作成する画像の種類を決定
@@ -91,13 +93,13 @@ def save_location():  # 保存先の指定
         except FileNotFoundError:
             print("保存先が正しくありません")
         except Exception as e:
-            exit_program(e)
+            exit_program(e, sys.exc_info)
         else:
             print(path+'に保存します')
             return path
 
 
-def get_fps(map_name):
+def get_fps(map_name):  # 何fpsで動画を作成するか入力する
     while True:
         print(map_name+':fps(radarは24,それ以外は12):', end='')
         try:

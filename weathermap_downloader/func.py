@@ -4,12 +4,16 @@ import urllib
 import time
 
 
-def exit_program(e):
+def exit_program(e, info=None):  # プログラムを終了させる
+    if not info is None:
+        exc_type, exc_obj, exc_tb = info
+        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+        print(exc_type, fname, exc_tb.tb_lineno, '行目')
     print(e)
-    print("\'q\'で終了します")
+    print('\'q\'で終了します')
     while True:
         s = input()
-        if s == "q":
+        if s == 'q':
             sys.exit()
 
 
@@ -20,7 +24,7 @@ def get_location(file_name):  # 画像の保存場所を設定したファイル
         file_stream = open(file_name, mode='w')
         file_stream.write('.')
     except Exception as e:
-        exit_program(e)
+        exit_program(e,sys.exc_info)
     finally:
         location = file_stream.readline()
         file_stream.close()
@@ -36,7 +40,7 @@ def move_location(location):  # 画像の保存場所に移動
     except FileNotFoundError:
         exit_program('指定されたパスは存在しません. location.txtを正しく設定してください.')
     except Exception as e:
-        exit_program(e)
+        exit_program(e,sys.exc_info)
 
 
 def check_connection():  # ネット接続が確立されるまで待機
