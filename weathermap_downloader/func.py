@@ -24,7 +24,7 @@ def get_location(file_name):  # 画像の保存場所を設定したファイル
         file_stream = open(file_name, mode='w')
         file_stream.write('.')
     except Exception as e:
-        exit_program(e,sys.exc_info)
+        exit_program(e, sys.exc_info())
     finally:
         location = file_stream.readline()
         file_stream.close()
@@ -40,7 +40,7 @@ def move_location(location):  # 画像の保存場所に移動
     except FileNotFoundError:
         exit_program('指定されたパスは存在しません. location.txtを正しく設定してください.')
     except Exception as e:
-        exit_program(e,sys.exc_info)
+        exit_program(e, sys.exc_info())
 
 
 def check_connection():  # ネット接続が確立されるまで待機

@@ -29,7 +29,7 @@ def move_location(map_list):  # 画像の保存場所に移動
         except FileNotFoundError:
             print("移動先が見つかりません")
         except Exception as e:
-            exit_program(e, sys.exc_info)
+            exit_program(e, sys.exc_info())
         else:
             ismaplist = True  # 移動先が正しいかどうか
             for maptype in map_list:
@@ -93,7 +93,7 @@ def save_location():  # 保存先の指定
         except FileNotFoundError:
             print("保存先が正しくありません")
         except Exception as e:
-            exit_program(e, sys.exc_info)
+            exit_program(e, sys.exc_info())
         else:
             print(path+'に保存します')
             return path

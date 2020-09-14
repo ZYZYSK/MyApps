@@ -21,7 +21,8 @@ if ($islight -eq 1) {
   }
 
   #vscode
-  $vscode_path = "C:\Users\huang\AppData\Roaming\Code\User\settings.json"
+  $Username = $env:USERPROFILE
+  $vscode_path = "$Username\AppData\Roaming\Code\User\settings.json"
   $vscode_settings = Get-Content $vscode_path | ConvertFrom-Json
   $vscode_settings."workbench.colorTheme" = "Default Dark+"
   $vscode_settings | ConvertTo-Json  | Set-Content $vscode_path

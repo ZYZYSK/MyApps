@@ -74,7 +74,7 @@ class Map_default(Map):
                 except FileNotFoundError:
                     pass
                 except Exception as e:
-                    exit_program(e, sys.exc_info)
+                    exit_program(e, sys.exc_info())
                 # コピーが成功したことを表示
                 else:
                     print('コピー　　　：'+name)
@@ -124,7 +124,7 @@ class Map_weather_map(Map):  # 天気図ダウンロード用
                 except FileNotFoundError:
                     pass
                 except Exception as e:
-                    exit_program(e, sys.exc_info)
+                    exit_program(e, sys.exc_info())
                 # コピーが成功したことを表示
                 else:
                     print('コピー　　　：'+name)
