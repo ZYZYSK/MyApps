@@ -42,6 +42,8 @@ class GPV:
         central_longitude=140, central_latitude=35, standard_parallels=(30, 60))
     # 正距円筒図法
     datacrs = ccrs.PlateCarree()
+    # 高度のシグマ
+    height_sigma = 1.0
     @classmethod
     def exit_program(cls, e, info=None):  # プログラムの終了
         if not info is None:
@@ -87,7 +89,6 @@ class GPV:
         try:
             os.makedirs(cls.path, exist_ok=True)
             os.chdir(cls.path)
-            print(os.getcwd())
         except FileNotFoundError:
             cls.exit_program('指定されたパスは正しくありません. gpv_settings.txtを正しく設定してください.')
         except Exception as e:
@@ -196,7 +197,7 @@ class GPV:
     def j_300_hw(self):  # 300hPa Height & Winds in Japan
         # 300hPa高度、緯度、経度の取得
         height, lat, lon = self.gpv_select_jp(self.gpv, 'gh', 300)
-        height = gaussian_filter(height, sigma=3.0)
+        height = gaussian_filter(height, sigma=self.height_sigma)
         # 300hPa風の取得
         uwnd, _, _ = self.gpv_select_jp(self.gpv, 'u', 300) * units('m/s')
         vwnd, _, _ = self.gpv_select_jp(self.gpv, 'v', 300) * units('m/s')
@@ -230,7 +231,7 @@ class GPV:
     def j_500_ht(self):  # 500hPa Height & Temperture in Japan
         # 500hPa高度、緯度、経度の取得
         height, lat, lon = self.gpv_select_jp(self.gpv, 'gh', 500)
-        height = gaussian_filter(height, sigma=3.0)
+        height = gaussian_filter(height, sigma=self.height_sigma)
         # 500hPa気温の取得
         temp, _, _ = self.gpv_select_jp(self.gpv, 't', 500)
         temp = (temp * units.kelvin).to(units.celsius)
@@ -263,7 +264,7 @@ class GPV:
     def j_500_hv(self):  # 500hPa Height & Vorticity & Winds in Japan
         # 500hPa高度、緯度、経度の取得
         height, lat, lon = self.gpv_select_jp(self.gpv, 'gh', 500)
-        height = gaussian_filter(height, sigma=3.0)
+        height = gaussian_filter(height, sigma=self.height_sigma)
         # 500hPa風の取得
         uwnd, _, _ = self.gpv_select_jp(self.gpv, 'u', 500) * units('m/s')
         vwnd, _, _ = self.gpv_select_jp(self.gpv, 'v', 500) * units('m/s')
@@ -348,7 +349,7 @@ class GPV:
     def j_850_ht(self):  # 850hPa Height & Temperture in Japan
         # 850hPa高度、緯度、経度の取得
         height, lat, lon = self.gpv_select_jp(self.gpv, 'gh', 850)
-        height = gaussian_filter(height, sigma=3.0)
+        height = gaussian_filter(height, sigma=self.height_sigma)
         # 850hPa気温の取得
         temp, _, _ = self.gpv_select_jp(self.gpv, 't', 850)
         temp = (temp * units.kelvin).to(units.celsius)

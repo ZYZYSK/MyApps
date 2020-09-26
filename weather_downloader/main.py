@@ -47,7 +47,7 @@ def gpv_downloader():
     gpv_list = []
     # 開始日時
     time = datetime.datetime(GPV.time_start.year, GPV.time_start.month, GPV.time_start.day, 00, 00)
-    with futures.ProcessPoolExecutor(max_workers=20) as executor:
+    with futures.ProcessPoolExecutor(max_workers=12) as executor:
         # 実行
         while time.date() < GPV.time_end:
             job_list.append(executor.submit(exec_gpv, time=time, gpv_list=gpv_list))
