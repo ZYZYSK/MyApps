@@ -5,7 +5,7 @@ from viewer import *
 def main():
     # デフォルト画面を表示
     win = tk.Tk()
-    app = Viewer_Base(master=win)
+    app = Frame(master=win)
     app.mainloop()
 
 
