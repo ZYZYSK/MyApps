@@ -1,3 +1,7 @@
+#ダークモード開始Hour
+$DarkMode_StartHour = 18
+#ライトモード開始Hour
+$LightMode_StartHour = 6
 #システムテーマの値の保存場所
 $SystemTheme_Path = "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize"
 #Officeテーマの値の保存場所
@@ -6,8 +10,8 @@ $OfficeTheme_Path = "HKCU:\Software\Microsoft\Office\16.0\Common"
 $UserPath = $env:USERPROFILE
 #VSCodeの設定ファイルの保存場所
 $VSCode_Path = "$UserPath\AppData\Roaming\Code\User\settings.json"
-#変更後のテーマ(1でライト、0でダーク)
-$Theme = $args[0]
+#現在Hourの取得
+$CurrentHour = (Get-Date).Hour
 
 #現在のテーマを取得
 function GetCurrentTheme {
@@ -50,13 +54,26 @@ function ChangeVSCodeTheme([int] $x) {
   $VSCode_Settings = Get-Content $VSCode_Path | ConvertFrom-Json
   $VSCode_Settings."workbench.colorTheme" = $VSCode_Theme
   $VSCode_Settings | ConvertTo-Json  | Set-Content $VSCode_Path
-
+  
 }
-$islight = GetCurrentTheme
-#現在のテーマと変更後のテーマが同じではない
-if ($islight -ne $Theme) {
-  Write-Output "Changing Theme!"
-  ChangeSystemTheme $Theme
-  ChangeOfficeTheme $Theme
-  ChangeVSCodeTheme $Theme
+
+#現在のテーマを取得して，変更するかどうか判断
+function ChangeTheme([int] $x) {
+  $islight = GetCurrentTheme
+  #現在のテーマと変更後のテーマが同じではない
+  if ($islight -ne $x) {
+    Write-Output "Changing Theme!"
+    ChangeSystemTheme $x
+    ChangeOfficeTheme $x
+    ChangeVSCodeTheme $x
+  }
+}
+
+#ライトモード時
+if (($CurrentHour -ge $LightMode_StartHour) -and ($CurrentHour -lt $DarkMode_StartHour)) {
+  ChangeTheme 1
+}
+#ダークモード時
+else {
+  ChangeTheme 0
 }
