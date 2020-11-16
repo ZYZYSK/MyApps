@@ -4,6 +4,7 @@ import shutil
 import datetime
 import time as tm
 import sys
+from time import time
 import requests
 from concurrent import futures
 import cartopy.crs as ccrs
@@ -167,7 +168,7 @@ class GPV_dl:
         # 設定ファイルの"ダウンロード開始日時"を更新
         with open(cls.settings_file_path, mode='w') as f:
             f.write('{0}\n{1}'.format(cls.path, cls.time_end.strftime('%Y/%m/%d')))
-        print('設定ファイルの情報を更新しました')
+        print('設定ファイルを更新しました')
 
     @classmethod
     def rm_tmp(cls):
@@ -213,7 +214,7 @@ class GPV_dl:
     def __init__(self, time_now):
         # grib2ファイル名
         self.gpv_path = os.path.join('tmp', time_now.strftime('%Y%m%d%H'))
-        # ファイルを開く
+        # grib2ファイルを開く
         self.gpv = grib.open(self.gpv_path)
         # 時刻
         self.time_str1 = (time_now + datetime.timedelta(hours=self.time_diff)).strftime('%Y%m%d%H')
