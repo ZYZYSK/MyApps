@@ -13,3 +13,7 @@ def exit_program(e, info=None):  # プログラムの終了
         s = input()
         if s == 'q':
             sys.exit()
+
+
+def handler_sigint(signal, frame):  # SIGINTシグナルハンドラ
+    exit_program("SIGINTシグナルが送信されました．")

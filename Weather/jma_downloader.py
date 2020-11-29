@@ -6,9 +6,10 @@ import datetime
 import requests
 from concurrent import futures
 import logging
+import signal
 
 
-from .functions import exit_program, file_is_on_server
+from .functions import exit_program, handler_sigint, file_is_on_server
 
 # ログ出力の無効化
 logging.disable(logging.CRITICAL)
@@ -17,6 +18,8 @@ logging.basicConfig(level=logging.WARNING, format='%(levelname)s: %(message)s')
 
 
 def jma_downloader():
+    # SIGINTシグナルを受け取る
+    signal.signal(signal.SIGINT, handler_sigint)
     print('___JMA Downloader___')
     # ファイルの保存場所とダウンロード開始日時の情報を取得
     JmaDownloader.get_settings()
@@ -161,7 +164,7 @@ class JmaDownloader:
             except FileNotFoundError:
                 pass
             except Exception as e:
-                self.exit_program(e, sys.exc_info())
+                exit_program(e, sys.exc_info())
             # コピーが成功したことを表示
             else:
                 print('[コピー　　　] {0}'.format(file_name))
@@ -198,7 +201,7 @@ class JmaDownloaderWeatherMap(JmaDownloader):
             except FileNotFoundError:
                 pass
             except Exception as e:
-                self.exit_program(e, sys.exc_info())
+                exit_program(e, sys.exc_info())
             # コピーが成功したことを表示
             else:
                 print('[コピー　　　] {0}'.format(file_name))

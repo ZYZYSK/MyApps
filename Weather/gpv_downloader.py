@@ -5,6 +5,7 @@ import time as tm
 import datetime
 import requests
 from concurrent import futures
+import signal
 
 import numpy as np
 import cartopy.crs as ccrs
@@ -18,10 +19,12 @@ import metpy.calc as mpcalc
 from scipy.ndimage import gaussian_filter
 import pygrib as grib
 
-from .functions import exit_program
+from .functions import exit_program, handler_sigint
 
 
 def gpv_downloader():
+    # SIGINTシグナルを受け取る
+    signal.signal(signal.SIGINT, handler_sigint)
     print('___GPV Downloader___')
     # ファイルの保存場所とダウンロード開始日時の情報を取得
     GpvDownloader.get_settings()
