@@ -1,0 +1,1 @@
+wt ssh -p 22 -l 19t4027h trans.ibaraki.ac.jp

@@ -1,3 +1,3 @@
-from .jma_dl import JMA_dl, JMA_dl_weathermap
-from .gpv_dl import GPV_dl
-__all__ = ['JMA_dl', 'GPV_dl', 'JMA_dl_weathermap']
+from .jma_downloader import jma_downloader
+from .gpv_downloader import gpv_downloader
+__all__ = ['jma_downloader', 'gpv_downloader']

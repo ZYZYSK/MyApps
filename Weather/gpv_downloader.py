@@ -1,12 +1,12 @@
 import os
-from pdb import main
 import shutil
-import datetime
-import time as tm
 import sys
-from time import time
+import time as tm
+import datetime
 import requests
 from concurrent import futures
+
+import numpy as np
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 import matplotlib.pyplot as plt
@@ -15,12 +15,58 @@ from matplotlib import cm
 from matplotlib.colors import ListedColormap
 from metpy.units import units
 import metpy.calc as mpcalc
-import numpy as np
 from scipy.ndimage import gaussian_filter
 import pygrib as grib
 
+from .functions import exit_program
 
-class GPV_dl:
+
+def gpv_downloader():
+    print('___GPV Downloader___')
+    # ファイルの保存場所とダウンロード開始日時の情報を取得
+    GpvDownloader.get_settings()
+    # ファイルの保存場所に移動
+    GpvDownloader.move_path()
+    # フォルダを作成
+    GpvDownloader.make_dirs()
+    # grib2ファイルをダウンロード
+    GpvDownloader.download_grib2()
+    # ジョブリスト
+    job_list = []
+    # クラスリスト
+    gpv_list = []
+    # 開始日時
+    time = datetime.datetime(GpvDownloader.time_start.year, GpvDownloader.time_start.month, GpvDownloader.time_start.day, 00, 00)
+    print("開始日時: {0}".format(time))
+    with futures.ProcessPoolExecutor(max_workers=12) as executor:
+        # 実行
+        while time.date() < GpvDownloader.time_end:
+            job_list.append(executor.submit(exec_gpv, time=time, gpv_list=gpv_list))
+            time += datetime.timedelta(hours=6)
+        _ = futures.as_completed(fs=job_list)
+    # 設定ファイルの更新
+    GpvDownloader.update_settings()
+    # 一時ファイルの削除
+    for i in gpv_list:
+        del i
+        tm.sleep(1)
+    # GpvDownloader.rm_tmp()
+    exit_program('正常に完了しました')
+
+
+def exec_gpv(time, gpv_list):
+    gpv_cls = GpvDownloader(time)
+    gpv_list.append(gpv_cls)
+    gpv_cls.j_300_hw()
+    gpv_cls.j_500_ht()
+    gpv_cls.j_500_hv()
+    gpv_cls.j_500_t_700_dewp()
+    gpv_cls.j_850_ht()
+    gpv_cls.j_850_tw_700_vv()
+    gpv_cls.j_850_eptw()
+
+
+class GpvDownloader:
     # 設定ファイルの場所
     settings_file_path = os.path.join(os.path.dirname(__file__), 'gpv_settings.txt')
     # 設定ファイルに"ダウンロード開始日時"が書かれていなかった場合に何日前からダウンロードするか
@@ -48,22 +94,7 @@ class GPV_dl:
     height_sigma = 1.0
 
     @classmethod
-    def exit_program(cls, e, info=None):  # プログラムの終了
-        if not info is None:
-            exc_type, exc_obj, exc_tb = info
-            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-            print(exc_type, fname, exc_tb.tb_lineno, '行目')
-        print(e)
-        print('\'q\'で終了します')
-        while True:
-            s = input()
-            if s == 'q':
-                sys.exit()
-
-    @classmethod
-    def get_settings(cls):
-        # 設定ファイルを読み込み，"データの保存場所"と"ダウンロード開始日時"を取得
-
+    def get_settings(cls):  # 設定ファイルを読み込み，"データの保存場所"と"ダウンロード開始日時"を取得
         settings = []
         try:
             # 設定ファイルを開く
@@ -81,7 +112,7 @@ class GPV_dl:
         # 設定ファイルに何も書かれていなかった場合
         if len(settings) == 0:
             # メッセージを出力して終了
-            cls.exit_program("\"データの保存場所\"が指定されていません．{0} を正しく設定してください．".format(cls.settings_file_path))
+            exit_program("\"データの保存場所\"が指定されていません．{0} を正しく設定してください．".format(cls.settings_file_path))
 
         # "データの保存場所"を取得
         cls.path = settings[0]
@@ -98,8 +129,7 @@ class GPV_dl:
         print('保存先: {0}, ダウンロード開始日時: {1}'.format(cls.path, cls.time_start.strftime('%Y/%m/%d')))
 
     @classmethod
-    def move_path(cls):
-        # "データの保存場所"に移動
+    def move_path(cls):  # "データの保存場所"に移動
         try:
             # "データの保存場所"が存在しない場合は，ディレクトリを作成
             os.makedirs(cls.path, exist_ok=True)
@@ -108,12 +138,10 @@ class GPV_dl:
 
         # "データの保存場所"が正しくない場合
         except FileNotFoundError:
-            cls.exit_program("\"データの保存場所\"が正しくありません．{0} を正しく設定してください．".format(cls.settings_file_path))
+            exit_program("\"データの保存場所\"が正しくありません．{0} を正しく設定してください．".format(cls.settings_file_path))
 
     @classmethod
-    def download_grib2_sub(cls, time):
-        # grib2ファイルをダウンロード
-
+    def download_grib2_sub(cls, time):  # grib2ファイルをダウンロード
         # ファイル名
         file_name = os.path.join('tmp', time.strftime('%Y%m%d%H'))
 
@@ -145,9 +173,7 @@ class GPV_dl:
                 break
 
     @classmethod
-    def download_grib2(cls):
-        # grib2ファイルをダウンロード
-
+    def download_grib2(cls):  # grib2ファイルをダウンロード
         # ダウンロード開始日時
         time = datetime.datetime(cls.time_start.year, cls.time_start.month, cls.time_start.day, 00, 00)
         # ダウンロード終了日時の次の日
@@ -164,23 +190,20 @@ class GPV_dl:
             _ = futures.as_completed(fs=job_list)
 
     @classmethod
-    def update_settings(cls):
-        # 設定ファイルの"ダウンロード開始日時"を更新
+    def update_settings(cls):  # 設定ファイルの"ダウンロード開始日時"を更新
         with open(cls.settings_file_path, mode='w') as f:
             f.write('{0}\n{1}'.format(cls.path, cls.time_end.strftime('%Y/%m/%d')))
         print('設定ファイルを更新しました')
 
     @classmethod
-    def rm_tmp(cls):
-        # 一時ファイルを削除
+    def rm_tmp(cls):  # 一時ファイルを削除
         try:
             shutil.rmtree(os.path.join(cls.path, 'tmp'))
         except Exception as e:
-            cls.exit_program(e, sys.exc_info())
+            exit_program(e, sys.exc_info())
 
     @classmethod
-    def make_dirs(cls):
-        # フォルダを作成
+    def make_dirs(cls):  # フォルダを作成
         dir_list = ['tmp', 'j300hw', 'j500ht', 'j500hv', 'j500t700td', 'j850ht', 'j850tw700vv', 'j850eptw']
         for dirs in dir_list:
             os.makedirs(dirs, exist_ok=True)

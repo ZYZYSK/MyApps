@@ -1,14 +1,60 @@
 import os
 import shutil
 import sys
-import datetime
 import time as tm
+import datetime
 import requests
-import urllib
 from concurrent import futures
+import logging
 
 
-class JMA_dl:
+from .functions import exit_program, file_is_on_server
+
+# ログ出力の無効化
+logging.disable(logging.CRITICAL)
+# ログ出力設定
+logging.basicConfig(level=logging.WARNING, format='%(levelname)s: %(message)s')
+
+
+def jma_downloader():
+    print('___JMA Downloader___')
+    # ファイルの保存場所とダウンロード開始日時の情報を取得
+    JmaDownloader.get_settings()
+    # ファイルの保存場所に移動
+    JmaDownloader.move_path()
+    # ジョブリスト
+    job_list = []
+
+    # debug
+    logging.warning("クラス変数準備完了\nクラス初期化")
+
+    # クラスの指定　
+    infrared = JmaDownloader('infrared', 'https://www.jma.go.jp/jp/gms/imgs_c/0/infrared/1/', 10)
+    infrared_earth = JmaDownloader('infrared_earth', 'https://www.jma.go.jp/jp/gms/imgs_c/6/infrared/1/', 10)
+    radar = JmaDownloader('radar', 'https://www.jma.go.jp/jp/radnowc/imgs/radar/000/', 5)
+    visible = JmaDownloader('visible', 'https://www.jma.go.jp/jp/gms/imgs_c/0/visible/1/', 10)
+    visible_earth = JmaDownloader('visible_earth', 'https://www.jma.go.jp/jp/gms/imgs_c/6/visible/1/', 10)
+    watervapor = JmaDownloader('watervapor', 'https://www.jma.go.jp/jp/gms/imgs_c/0/watervapor/1/', 10)
+    watervapor_earth = JmaDownloader('watervapor_earth', 'https://www.jma.go.jp/jp/gms/imgs_c/6/watervapor/1/', 10)
+    weather_map = JmaDownloaderWeatherMap('weather_map', 'https://www.jma.go.jp/jp/g3/images/jp_c/', 180)
+    # debug
+    logging.warning("クラスの指定が完了")
+
+    # クラスリスト
+    jma_list = [infrared, infrared_earth, radar, visible,
+                visible_earth, watervapor, watervapor_earth, weather_map]
+    # debug
+    logging.warning("ダウンロード準備完了")
+
+    # ダウンロード
+    with futures.ProcessPoolExecutor(max_workers=len(jma_list)) as executor:
+        for i in jma_list:
+            job_list.append(executor.submit(i.download_map))
+        _ = futures.as_completed(fs=job_list)
+    logging.warning("ダウンロード終了")
+
+
+class JmaDownloader:
     # 設定ファイルの場所
     settings_file_path = os.path.join(os.path.dirname(__file__), 'jma_settings.txt')
     # 何日前から
@@ -17,22 +63,8 @@ class JMA_dl:
     path = None
 
     @classmethod
-    def exit_program(cls, e, info=None):
-        # プログラムの終了
-        if not info is None:
-            exc_type, exc_obj, exc_tb = info
-            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-            print(exc_type, fname, exc_tb.tb_lineno, '行目')
-        print(e)
-        print('\'q\'で終了します')
-        while True:
-            s = input()
-            if s == 'q':
-                sys.exit()
-
-    @classmethod
-    def get_settings(cls):
-        # 設定ファイルを読み込み，"データの保存場所"を取得
+    def get_settings(cls):  # 設定ファイルを読み込み，"データの保存場所"を取得
+        # 設定ファイルを開く
         try:
             with open(cls.settings_file_path, mode='r') as f:
                 cls.path = f.readline().strip('\n')
@@ -45,7 +77,7 @@ class JMA_dl:
 
         # 設定ファイルに何も書かれていなかった場合
         if cls.path is None:
-            cls.exit_program("\"データの保存場所\"が指定されていません．{0} を正しく設定してください．".format(cls.settings_file_path))
+            exit_program("\"データの保存場所\"が指定されていません．{0} を正しく設定してください．".format(cls.settings_file_path))
 
         print('保存先： {0}'.format(cls.path))
 
@@ -60,37 +92,10 @@ class JMA_dl:
 
         # "データの保存場所"が正しくない場合
         except FileNotFoundError:
-            cls.exit_program("\"データの保存場所\"が正しくありません．{0} を正しく設定してください．".format(cls.settings_file_path))
-
-    @classmethod
-    def is_exists(cls, url):
-        # インターネット接続を確認して，ダウンロードする画像がサーバーに存在するか確認
-        def is_connected():
-            while True:
-                # ネット接続を確認
-                try:
-                    urllib.request.urlopen('https://www.jma.go.jp/jma/index.html')
-                # 接続できなければ10秒待って再試行
-                except Exception as e:
-                    print('[接続エラー] {0}'.format(e))
-                    tm.sleep(10)
-                # 接続出来たらループから抜ける
-                else:
-                    break
-        # 目的の画像がサーバーに存在するか確認
-        #存在すればTrue, 存在しなければFalseを返す
-        cnt = 0
-        while cnt < 3:
-            try:
-                is_connected()
-                urllib.request.urlopen(url)
-            except Exception:
-                cnt += 1
-            else:
-                return True
-        return False
+            exit_program("\"データの保存場所\"が正しくありません．{0} を正しく設定してください．".format(cls.settings_file_path))
 
     def __init__(self, map_name, map_url, interval):  # 初期化
+        logging.warning("{0} 初期化開始 {1}".format(map_name, self))
         # 画像の種類
         self.map_name = map_name
         # URL
@@ -108,17 +113,19 @@ class JMA_dl:
         self.time_end = datetime.datetime.now() - datetime.timedelta(minutes=self.interval)
         # フォルダの作成
         os.makedirs(self.map_name, exist_ok=True)
+        logging.warning("初期化終了")
 
-    def download_map(self):
-        # 現在日時までのファイルをダウンロード
+    def download_map(self):  # 現在日時までのファイルをダウンロード
+        logging.warning("JmaDownloader.download_map()")
+        logging.warning(os.getcwd())
+        logging.warning(self.map_name)
         while self.time_now <= self.time_end:
+            logging.warning("{0}のダウンロード前です".format(self.time_now))
             self.download_file(self.time_now)
             # 日時を進める
             self.time_now += datetime.timedelta(minutes=self.interval)
 
-    def download_file(self, time):
-        # 個々の画像を取得
-
+    def download_file(self, time):  # 個々の画像を取得
         # 日時を文字列に変換
         time_str = time.strftime('%Y%m%d%H%M')
         # 画像名を指定
@@ -129,7 +136,7 @@ class JMA_dl:
         # URLの作成
         url = self.map_url + time_str + '-00.png'
         # ダウンロードする画像が存在する場合
-        if self.is_exists(url):
+        if file_is_on_server(url):
             while True:
                 # ダウンロード試行
                 try:
@@ -160,15 +167,13 @@ class JMA_dl:
                 print('[コピー　　　] {0}'.format(file_name))
 
 
-class JMA_dl_weathermap(JMA_dl):
+class JmaDownloaderWeatherMap(JmaDownloader):
     # 天気図ダウンロード用
     def __init__(self, map_name, map_url, interval):
         # 初期化
         super().__init__(map_name, map_url, interval)
 
-    def download_file(self, time):
-        # 個々のファイルを取得
-
+    def download_file(self, time):  # 個々のファイルを取得
         # 日時を文字列に変換して調整
         time_str = time.strftime('%Y%m%d%H')
         time_str = time_str[2:]
@@ -201,7 +206,7 @@ class JMA_dl_weathermap(JMA_dl):
         # 0時以外のファイルを取得する場合
         else:
             # ダウンロードしたいファイルがサーバーにある場合
-            if (self.is_exists(url)):
+            if (file_is_on_server(url)):
                 while True:
                     # ダウンロード試行
                     try:

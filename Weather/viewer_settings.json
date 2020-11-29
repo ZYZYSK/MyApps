@@ -1,0 +1,37 @@
+{
+    "window_title": "Weather Viewer",
+    "jma_list": [
+        "赤外(日本域)",
+        "赤外(全球)",
+        "可視(日本域)",
+        "可視(全球)",
+        "水蒸気(日本域)",
+        "水蒸気(全球)",
+        "レーダー(日本域)",
+        "天気図"
+    ],
+    "gpv_list": [
+        "300高度、風",
+        "500高度、気温",
+        "500高度、渦度、風",
+        "500気温/700湿数",
+        "850高度、気温",
+        "850気温、風/700鉛直流",
+        "850相当温位"
+    ],
+    "resolution": "1920x1080",
+    "jma_path": "D:\\Cloud\\OneDrive - Ibaraki University\\Weather",
+    "gpv_path": "D:\\Cloud\\OneDrive - Ibaraki University\\Weather_GPV",
+    "toolbar_h": 30,
+    "ctrlbar_h": 20,
+    "__comment__": [
+        "window_title: ウィンドウ名",
+        "jma_list: JMAデータリスト",
+        "gpv_list: GPVデータリスト",
+        "resolution: 解像度",
+        "jma_path: JMAデータへのパス",
+        "gpv_path: GPVデータへのパス",
+        "toolbar_h: ツールバーの高さ",
+        "ctrlbar_h: コントロールバーの高さ"
+    ]
+}
