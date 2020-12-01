@@ -12,11 +12,11 @@
    viewBox="0 0 7.9374999 7.9374999"
    version="1.1"
    id="svg8"
-   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
-   sodipodi:docname="multi.svg"
-   inkscape:export-filename="D:\MyApps\weather_viewer\icons\multi.png"
-   inkscape:export-xdpi="96"
-   inkscape:export-ydpi="96">
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   sodipodi:docname="pane1.svg"
+   inkscape:export-filename="D:\MyApps\weather\icons\pane1.png"
+   inkscape:export-xdpi="112"
+   inkscape:export-ydpi="112">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -26,9 +26,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="31.678384"
-     inkscape:cx="28.277106"
-     inkscape:cy="17.972378"
+     inkscape:zoom="15.839192"
+     inkscape:cx="15.019646"
+     inkscape:cy="14.198489"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -37,7 +37,7 @@
      fit-margin-right="0"
      fit-margin-bottom="0"
      inkscape:window-width="2560"
-     inkscape:window-height="1377"
+     inkscape:window-height="1387"
      inkscape:window-x="2552"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -67,21 +67,11 @@
        x="0.086411014"
        y="257.0864" />
     <rect
-       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.532864;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.529191;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect817"
-       width="6.0817204"
-       height="6.0817199"
-       x="1.0143008"
-       y="258.01428"
-       inkscape:export-xdpi="96"
-       inkscape:export-ydpi="96" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 7.050771,261.05515 H 1.059551"
-       id="path834" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 4.0551612,257.99961 v 5.99122"
-       id="path834-1" />
+       width="6.0853925"
+       height="6.0853925"
+       x="1.0124646"
+       y="258.01257" />
   </g>
 </svg>

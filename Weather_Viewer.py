@@ -1,5 +1,4 @@
-from Weather import BaseWindow
-import tkinter as tk
-win = tk.Tk()
-app = BaseWindow(master=win)
-app.mainloop()
+from tkinter import mainloop
+from weather import viewer
+if __name__ == "__main__":
+    viewer()

@@ -1,46 +1,61 @@
 import tkinter as tk
+from tkinter import ttk
 import json
 import os
 import sys
 import logging
+import signal
+
+from .functions import exit_program, handler_sigint
 
 # ログ出力の無効化
 # logging.disable(logging.CRITICAL)
+# ログ出力設定
+logging.basicConfig(level=logging.WARNING, format='%(levelname)s: %(message)s')
 
 # 境界線の太さ
-BORDER_DEBUG = 10
+BORDER_DEBUG = 50
 BORDER_RELEASE = 1
 
 
-class BaseWindow(tk.Frame):
+def viewer():
+    logging.basicConfig(level=logging.WARNING, format='%(levelname)s: %(message)s')
+    # SIGINTシグナルを受け取る
+    signal.signal(signal.SIGINT, handler_sigint)
+    # 設定情報の取得
+    ViewerBase.get_settings()
+    # 画面表示
+    win = tk.Tk()
+    app = ViewerBase(master=win)
+    app.mainloop()
+
+
+class ViewerBase(ttk.Frame):
     # 設定ファイルのパス
-    settings_path = os.path.join(os.path.dirname(__file__), "settings.json")
+    settings_path = os.path.join(os.path.dirname(__file__), "viewer_settings.json")
     # 設定情報
     settings = None
-    # アイコンへのパス
-    img_full_path = os.path.join(os.path.dirname(__file__), 'icons', 'fullscreen.png')
-    img_vs_path = os.path.join(os.path.dirname(__file__), 'icons', 'vs.png')
-    img_sp_path = os.path.join(os.path.dirname(__file__), 'icons', 'sp.png')
-    img_multi_path = os.path.join(os.path.dirname(__file__), 'icons', 'multi.png')
+    #アイコンへのパス: app
+    icn_app = os.path.join(os.path.dirname(__file__), 'icons', 'app.ico')
 
-    @staticmethod
-    def exitProgram(e, info=None):  # プログラムを終了させる
-        if not info is None:
-            exc_type, exc_obj, exc_tb = info
-            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-            print("{0} {1} {2}行目\n{3}".format(exc_type, fname, exc_tb.tb_lineno, e))
-        print("{0}\n\'q\'で終了します".format(e))
-        while True:
-            s = input()
-            if s == 'q':
-                sys.exit()
+    #アイコンへのパス: toolbar1
+    icn_time_change = os.path.join(os.path.dirname(__file__), 'icons', 'time_change.png')
+    icn_time_change_disabled = os.path.join(os.path.dirname(__file__), 'icons', 'time_change_disabled.png')
+
+    # アイコンへのパス: toolbar2
+    icn_pane1 = os.path.join(os.path.dirname(__file__), 'icons', 'pane1.png')
+    icn_pane2v = os.path.join(os.path.dirname(__file__), 'icons', 'pane2v.png')
+    icn_pane2h = os.path.join(os.path.dirname(__file__), 'icons', 'pane2h.png')
+    icn_pane4 = os.path.join(os.path.dirname(__file__), 'icons', 'pane4.png')
+    icn_pane4 = os.path.join(os.path.dirname(__file__), 'icons', 'pane4.png')
+    icn_setting = os.path.join(os.path.dirname(__file__), 'icons', 'setting.png')
 
     @classmethod
-    def getSettings(cls):  # 設定情報を取得する
+    def get_settings(cls):  # 設定情報を取得する
         # 設定ファイルを読み込む
         try:
-            with open(cls.settings_path, mode='r') as f:
-                settings = json.load(f)
+            with open(cls.settings_path, mode='r', encoding="utf-8") as f:
+                cls.settings = json.load(f)
 
         # 設定ファイルが存在しない場合
         except FileNotFoundError:
@@ -48,102 +63,107 @@ class BaseWindow(tk.Frame):
 
         # ファイルオープンエラー
         except Exception as e:
-            BaseWindow.exitProgram(e, sys.exc_info())
+            exit_program(e, sys.exc_info())
 
         else:
-            # Debug
-            logging.debug(settings)
+            for i in cls.settings:
+                logging.warning("\t{0}: {1}".format(i, cls.settings[i]))
 
     def __init__(self, master=None):
-
         # 初期設定
         super().__init__(master)
         self.pack()
-        self.init_start(master)
-        # レイヤーの初期化
-        self.layer = [Viewer_OneFrame()] * 4
-        # 全体画面
-        self.frame_base = tk.Frame(master, bd=0, relief='solid')
-        self.frame_base.pack(expand=True, fill=tk.BOTH)
-        # ツールバー
-        self.toolbar = tk.Frame(self.frame_base, bd=1, relief='solid')
-        self.toolbar.pack(expand=False, anchor=tk.N, fill=tk.X)
-        # ツールバーのボタン(全画面)
-        self.img_full = tk.PhotoImage(file=self.img_full_path)
-        self.btn_full = tk.Button(self.toolbar, width=self.toolbar_height, image=self.img_full)
-        self.btn_full.bind('<1>', self.show_full)
-        self.btn_full.grid(row=0, column=0)
-        # ツールバーのボタン(縦2画面)
-        self.img_vs = tk.PhotoImage(file=self.img_vs_path)
-        self.btn_vs = tk.Button(self.toolbar, width=self.toolbar_height, image=self.img_vs)
-        self.btn_vs.bind('<1>', self.show_vs)
-        self.btn_vs.grid(row=0, column=1)
-        # ツールバーのボタン(横2画面)
-        self.img_sp = tk.PhotoImage(file=self.img_sp_path)
-        self.btn_sp = tk.Button(self.toolbar, width=self.toolbar_height, image=self.img_sp)
-        self.btn_sp.grid(row=0, column=2)
-        # ツールバーのボタン(4画面)
-        self.img_multi = tk.PhotoImage(file=self.img_multi_path)
-        self.btn_multi = tk.Button(self.toolbar, width=self.toolbar_height, image=self.img_multi)
-        self.btn_multi.grid(row=0, column=3)
 
-    # 起動時の初期設定
-    def init_start(self, master):
-        # プログラムの解像度
-        master.geometry('1920x1080')
-        # プログラムタイトル　
-        master.title('Weather Viewer')
+        # ルートウィンドウの設定: タイトルバーの名前
+        master.title(self.settings["window_title"])
+        # ルートウィンドウの設定: 解像度
+        master.geometry(self.settings["resolution"])
+        # ルートウィンドウの設定: 最小ウィンドウサイズ
+        master.minsize(self.settings["min_size"][0], self.settings["min_size"][1])
+        # ルートウィンドウの設定: アイコン画像
+        master.iconbitmap(self.icn_app)
 
-    def show_full(self, event):  # 全画面表示
-        # 画像を表示する画面[フルスクリーン]
-        self.frame_full = tk.Frame(self.frame_base, bd=10, relief='solid')
-        self.frame_full.pack(expand=True, anchor=tk.N, fill=tk.BOTH)
-        # self.show_set(self.frame_full, 0)
+        # アイコンの読み込み
+        self.img_time_change = tk.PhotoImage(file=self.icn_time_change)
+        self.img_time_change_disabled = tk.PhotoImage(file=self.icn_time_change_disabled)
+        self.img_pane1 = tk.PhotoImage(file=self.icn_pane1)
+        self.img_pane2h = tk.PhotoImage(file=self.icn_pane2h)
+        self.img_pane2v = tk.PhotoImage(file=self.icn_pane2v)
+        self.img_pane4 = tk.PhotoImage(file=self.icn_pane4)
+        self.img_setting = tk.PhotoImage(file=self.icn_setting)
 
-    def show_vs(self, event):  # 縦2画面表示
-        # 左側の画面
-        self.frame_vs1 = tk.Frame(self.frame_base, bd=10, relief='solid')
-        self.frame_vs1.pack(expand=True, anchor=tk.W, side=tk.LEFT, fill=tk.BOTH)
-        # self.show_set(self.frame_vs1, 0)
-        # 右側の画面
-        self.frame_vs2 = tk.Frame(self.frame_base, bd=10, relief='solid')
-        self.frame_vs2.pack(expand=True, anchor=tk.E, side=tk.LEFT, fill=tk.BOTH)
-        # self.show_set(self.frame_vs2, 1)
+        # base_pane
+        self.basepane = ttk.Frame(master)
+        self.basepane.pack(expand=1, fill=tk.BOTH)
 
-    def show_set(self, frame_a, n, time=None):  # 1画像につき表示する画面
-        # コントロールバー
-        self.layer[n].ctrlbar = tk.Frame(frame_a, bd=1, relief='solid')
-        self.layer[n].ctrlbar.pack(expand=False, anchor=tk.N, fill=tk.X)
-        # コントロールバーのボタン(時間を戻す)
-        self.layer[n].btn_timeminus = tk.Button(self.layer[n].ctrlbar, text='<')
-        self.layer[n].btn_timeminus.grid(row=0, column=0)
-        # コントロールバーのボタン(現在時間)
-        text_time = '----/--/--/--:--' if time is None else time.strftime('%Y/%m/%d/%H:%M')
-        self.layer[n].btn_time = tk.Button(self.layer[n].ctrlbar, text=text_time)
-        self.layer[n].btn_time.grid(row=0, column=1)
-        # コントロールバーのボタン(時間を進める)
-        self.layer[n].btn_timeplus = tk.Button(self.layer[n].ctrlbar, text='>')
-        self.layer[n].btn_timeplus.grid(row=0, column=2)
-        # コントロールバーのボタン(画像の種類)
-        self.layer[n].map_type = ttk.Combobox(self.layer[n].ctrlbar, textvariable=self.layer[n].map_name, values=self.map_list)
-        self.layer[n].map_type.set(self.map_list[0])
-        self.layer[n].map_type.grid(row=0, column=3)
+        # ツールバーの文字の大きさ
+        self.toolbar_style = ttk.Style()
+        self.toolbar_style.configure('ToolbarFontSize.TButton', font=('Yu Gothic', 20))
+
+        #toolpane: toolbar1とtoolbar2の統合フレーム
+        self.toolpane = ttk.Frame(self.basepane)
+        self.toolpane.pack(anchor=tk.NW, expand=1, fill=tk.X, side=tk.TOP)
+        # toolbar1
+        self.toolbar1 = ttk.Frame(self.toolpane)
+        self.toolbar1.pack(anchor=tk.W, expand=1, fill=tk.X, padx=5, pady=5, side=tk.LEFT)
+        self.set_toolbar1_disabled()
+
+        # toolbar2
+        self.toolbar2 = ttk.Frame(self.toolpane)
+        self.toolbar2.pack(anchor=tk.E, expand=0, fill=tk.NONE, padx=5, pady=5, side=tk.LEFT)
+        self.set_toolbar2()
+
+        # pane格納用
+        self.panes = []
+
+    def set_toolbar1_disabled(self):  # toolbar1(非アクティブ)
+        # 「日時を戻す」ボタン
+        self.btn_time_minus = ttk.Button(self.toolbar1, text='<', style='ToolbarFontSize.TButton', width=5)
+        self.btn_time_minus.pack(anchor=tk.W, side=tk.LEFT)
+        self.btn_time_minus.state(['disabled'])
+
+        # 「現在日時」ラベル
+        self.btn_time_now = ttk.Button(self.toolbar1, text='---- / ----  -- : --', style='ToolbarFontSize.TButton')
+        self.btn_time_now.state(['disabled'])
+        self.btn_time_now.pack(anchor=tk.W, side=tk.LEFT)
+
+        # 「日時切り替え」ボタン
+        logging.warning(self.icn_time_change)
+        self.btn_time_change = ttk.Label(self.toolbar1, image=self.img_time_change_disabled, style='ToolbarFontSize.TButton', width=5)
+        self.btn_time_change.pack(anchor=tk.W, side=tk.LEFT)
+
+        # 「日時を進める」ボタン
+        self.btn_time_plus = ttk.Button(self.toolbar1, text='>', style='ToolbarFontSize.TButton', width=5)
+        self.btn_time_plus.pack(anchor=tk.W, side=tk.LEFT)
+        self.btn_time_plus.state(['disabled'])
+
+    def set_toolbar2(self):  # toolbar2(常にアクティブ)
+        # 全画面表示
+        self.btn_pane1 = ttk.Button(self.toolbar2, image=self.img_pane1, style='ToolbarFontSize.TButton')
+        self.btn_pane1.pack(anchor=tk.E, side=tk.LEFT)
+
+        # 2縦表示
+        self.btn_pane2v = ttk.Button(self.toolbar2, image=self.img_pane2v, style='ToolbarFontSize.TButton')
+        self.btn_pane2v.pack(anchor=tk.E, side=tk.LEFT)
+
+        # 2横表示
+        self.btn_pane2h = ttk.Button(self.toolbar2, image=self.img_pane2h, style='ToolbarFontSize.TButton')
+        self.btn_pane2h.pack(anchor=tk.E, side=tk.LEFT)
+
+        # 4画面表示
+        self.btn_pane4 = ttk.Button(self.toolbar2, image=self.img_pane4, style='ToolbarFontSize.TButton')
+        self.btn_pane4.pack(anchor=tk.E, side=tk.LEFT)
+
+        # 設定
+        self.btn_setting = ttk.Button(self.toolbar2, image=self.img_setting, style='ToolbarFontSize.TButton')
+        self.btn_setting.pack()
+
+    def set_pane1(self):  # 全画面表示
+        # 以前のpanesの処理
+        for pane in self.panes:
+            pass
 
 
-class Button(tk.Button):
-    def __init__(self, master, window_mode):
-        super().__init__(master,)
-
-
-class Viewer_OneFrame:
+class OnePane():  # 1つのPaneウィンドウ
     def __init__(self):
-        # コントロールバー
-        self.ctrlbar = None
-        # 時間を進める
-        self.btn_timepls = None
-        # 時間
-        self.btn_time = None
-        # 時間を戻す
-        self.btn_timeminus = None
-        # 現在選択している画像の名前
-        self.map_name = None
+        pass

@@ -1,0 +1,600 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="656.81042mm"
+   height="290.77051mm"
+   viewBox="0 0 656.81042 290.77051"
+   version="1.1"
+   id="svg8"
+   sodipodi:docname="viewer_image.svg"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   inkscape:export-filename="D:\MyApps\weather\viewer_image.png"
+   inkscape:export-xdpi="500"
+   inkscape:export-ydpi="500">
+  <defs
+     id="defs2">
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker6231"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:#ff0000;stroke-width:1.00000003pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path6229"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend"
+       style="overflow:visible"
+       inkscape:isstock="true"
+       inkscape:collect="always">
+      <path
+         id="path4775"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:#ff0000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <inkscape:path-effect
+       effect="gears"
+       id="path-effect918"
+       is_visible="true"
+       teeth="8"
+       phi="5"
+       min_radius="5" />
+    <inkscape:path-effect
+       effect="gears"
+       id="path-effect914"
+       is_visible="true"
+       teeth="10"
+       phi="5"
+       min_radius="5" />
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend-9"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4775-6"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:#ff0000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker6231-0"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         inkscape:connector-curvature="0"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:#ff0000;stroke-width:1.00000003pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path6229-0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend-9-5"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4775-6-1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:#ff0000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend-9-5-7"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4775-6-1-8"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:#ff0000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="-374.98785"
+     inkscape:cy="335.42606"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:window-width="2560"
+     inkscape:window-height="1387"
+     inkscape:window-x="2552"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     showguides="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0">
+    <inkscape:grid
+       empspacing="2"
+       type="xygrid"
+       id="grid995"
+       originx="266.2193"
+       originy="28.516745" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="レイヤー 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(266.2193,-34.74624)">
+    <rect
+       style="opacity:0.98000004;fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       id="rect815"
+       width="188.23215"
+       height="101.67559"
+       x="11.717261"
+       y="59.630951" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 11.717262,65.300595 H 199.38244"
+       id="path817"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 176.70387,59.441963 -0.18899,6.047618"
+       id="path819"
+       inkscape:connector-curvature="0" />
+    <rect
+       style="opacity:0.98000004;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       id="rect829"
+       width="2.7403271"
+       height="2.7403271"
+       x="193.6183"
+       y="61.142857" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.26499999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 193.6183,61.142855 2.74032,2.740327"
+       id="path831"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 196.35862,61.024739 -2.74032,2.740327"
+       id="path833"
+       inkscape:connector-curvature="0" />
+    <rect
+       style="opacity:0.98000004;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.26499999;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       id="rect835"
+       width="2.5513394"
+       height="2.6930804"
+       x="186.62576"
+       y="61.048363" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 178.73549,63.339844 h 3.07106"
+       id="path837"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.29166651px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="13.229841"
+       y="64.47551"
+       id="text841"><tspan
+         sodipodi:role="line"
+         id="tspan839"
+         x="13.229841"
+         y="64.47551"
+         style="stroke-width:0.26458332">Weather Viewer</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 12.027129,72.760866 H 199.9176"
+       id="path845"
+       inkscape:connector-curvature="0" />
+    <rect
+       style="opacity:0.98000004;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.5;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       id="rect853"
+       width="3.7417734"
+       height="3.7417734"
+       x="160.75516"
+       y="67.142838" />
+    <g
+       id="g906"
+       transform="translate(0.19243693,-0.00536397)">
+      <rect
+         y="67.148201"
+         x="168.77327"
+         height="3.7417734"
+         width="3.7417734"
+         id="rect853-8"
+         style="opacity:0.98000004;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.5;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path891"
+         d="m 168.63971,69.019091 h 3.94223"
+         style="fill:none;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path893"
+         d="m 170.64423,67.081389 v 3.875407"
+         style="fill:none;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    </g>
+    <g
+       id="g910"
+       transform="translate(0.51850939,0.3955302)">
+      <rect
+         y="66.747307"
+         x="176.65771"
+         height="3.7417734"
+         width="3.7417734"
+         id="rect853-8-4"
+         style="opacity:0.98000004;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.5;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path895"
+         d="m 178.52869,66.880935 v 3.541321"
+         style="fill:none;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    </g>
+    <g
+       id="g901"
+       transform="translate(-8.5098531,-0.53990983)">
+      <rect
+         y="67.682747"
+         x="193.89662"
+         height="3.7417734"
+         width="3.7417734"
+         id="rect853-8-0"
+         style="opacity:0.98000004;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.5;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path897"
+         d="m 193.96351,69.553631 h 3.67496"
+         style="fill:none;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    </g>
+    <path
+       style="opacity:0.98000004;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       d="m 195.53652,66.337327 a 2.3817143,2.3817143 0 0 0 -0.44621,0.08279 l 0.045,0.589525 a 1.8088524,1.8088524 0 0 0 -0.32527,0.15592 l -0.42983,-0.403106 a 2.3817143,2.3817143 0 0 0 -0.34505,0.295705 l 0.33162,0.48507 a 1.8088524,1.8088524 0 0 0 -0.20443,0.298648 l -0.57175,-0.133668 a 2.3817143,2.3817143 0 0 0 -0.15038,0.428779 l 0.53041,0.254487 a 1.8088524,1.8088524 0 0 0 -0.0299,0.317843 1.8088524,1.8088524 0 0 0 0.002,0.04206 l -0.56291,0.170286 a 2.3817143,2.3817143 0 0 0 0.0833,0.446796 l 0.5874,-0.04487 a 1.8088524,1.8088524 0 0 0 0.15592,0.325383 l -0.40145,0.428071 a 2.3817143,2.3817143 0 0 0 0.29594,0.345283 l 0.48306,-0.330327 a 1.8088524,1.8088524 0 0 0 0.29865,0.204434 l -0.13307,0.569624 a 2.3817143,2.3817143 0 0 0 0.42913,0.150732 l 0.25367,-0.528525 a 1.8088524,1.8088524 0 0 0 0.31784,0.0299 1.8088524,1.8088524 0 0 0 0.042,-0.0015 l 0.16994,0.56138 a 2.3817143,2.3817143 0 0 0 0.44703,-0.08279 l -0.0448,-0.586347 a 1.8088524,1.8088524 0 0 0 0.32538,-0.15592 l 0.42772,0.401103 a 2.3817143,2.3817143 0 0 0 0.34574,-0.295595 l -0.33045,-0.483185 a 1.8088524,1.8088524 0 0 0 0.20456,-0.29865 l 0.57022,0.133299 a 2.3817143,2.3817143 0 0 0 0.15108,-0.428897 l -0.52947,-0.254134 a 1.8088524,1.8088524 0 0 0 0.0298,-0.31761 1.8088524,1.8088524 0 0 0 -0.002,-0.04228 l 0.56315,-0.17041 a 2.3817143,2.3817143 0 0 0 -0.0824,-0.446562 l -0.58847,0.04487 a 1.8088524,1.8088524 0 0 0 -0.15604,-0.325382 l 0.40287,-0.429484 a 2.3817143,2.3817143 0 0 0 -0.29535,-0.345285 l -0.48507,0.331624 A 1.8088524,1.8088524 0 0 0 196.617,67.121978 l 0.13377,-0.572331 a 2.3817143,2.3817143 0 0 0 -0.42842,-0.150855 l -0.25508,0.531348 a 1.8088524,1.8088524 0 0 0 -0.31761,-0.02968 1.8088524,1.8088524 0 0 0 -0.0422,0.0015 z m 0.21315,1.437308 a 0.93463215,0.93463215 0 0 1 0.93457,0.934691 0.93463215,0.93463215 0 0 1 -0.93457,0.934573 0.93463215,0.93463215 0 0 1 -0.93469,-0.934573 0.93463215,0.93463215 0 0 1 0.93469,-0.934691 z"
+       id="path4731"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.29166651px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="13.474941"
+       y="70.783936"
+       id="text4766"><tspan
+         sodipodi:role="line"
+         id="tspan4764"
+         x="13.474941"
+         y="70.783936"
+         style="stroke-width:0.26458332">&lt; YYYY:MM/DD HH/MM   &gt;</tspan></text>
+    <path
+       sodipodi:type="star"
+       style="opacity:0.98000004;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       id="path4768"
+       sodipodi:sides="3"
+       sodipodi:cx="67.73333"
+       sodipodi:cy="98.033333"
+       sodipodi:r1="21.166666"
+       sodipodi:r2="10.583333"
+       sodipodi:arg1="1.5707963"
+       sodipodi:arg2="2.6179939"
+       inkscape:flatsided="true"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="M 67.73333,119.2 49.402459,87.45 86.0642,87.449999 Z"
+       inkscape:transform-center-y="0.52916619"
+       transform="matrix(0.11060194,0,0,0.09999999,70.825239,58.596668)" />
+    <path
+       style="fill:#ff0000;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       d="m 33.866667,68.4 c 2.116667,0 -270.933337,25.4 -270.933337,25.4"
+       id="path4770"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.29166651px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="-266.2193"
+       y="100.81818"
+       id="text5056"><tspan
+         sodipodi:role="line"
+         id="tspan5054"
+         x="-266.2193"
+         y="100.81818"
+         style="stroke-width:0.26458332">toolbar1</tspan><tspan
+         sodipodi:role="line"
+         x="-266.2193"
+         y="107.814"
+         style="stroke-width:0.26458332"
+         id="tspan5072">・全画像の種類が指定されるまで，非アクティブ</tspan><tspan
+         sodipodi:role="line"
+         x="-266.2193"
+         y="114.80981"
+         style="stroke-width:0.26458332"
+         id="tspan5076">・全Paneに画像の種類が指定されると，自動的に全画像が揃っている最新時間を表示し，アクティブになる</tspan><tspan
+         sodipodi:role="line"
+         x="-266.2193"
+         y="121.80563"
+         style="stroke-width:0.26458332"
+         id="tspan5078">　　　　・揃っている画像がなければ非アクティブ</tspan><tspan
+         sodipodi:role="line"
+         x="-266.2193"
+         y="128.80145"
+         style="stroke-width:0.26458332"
+         id="tspan5080">・&lt; &gt;をクリックすると時間の切り替え（全画像が揃っている時間への切り替え）ができる</tspan><tspan
+         sodipodi:role="line"
+         x="-266.2193"
+         y="135.79727"
+         style="stroke-width:0.26458332"
+         id="tspan5074">　　　　・時間の切り替えができない（全画像が揃っているのが現在時間しかない，現在時間が最新であるなど）</tspan><tspan
+         sodipodi:role="line"
+         x="-266.2193"
+         y="142.79309"
+         style="stroke-width:0.26458332"
+         id="tspan5084">場合は非アクティブ</tspan><tspan
+         sodipodi:role="line"
+         x="-266.2193"
+         y="149.78891"
+         style="stroke-width:0.26458332"
+         id="tspan5068">・時間の右の下矢印をクリックすると時間の選択ができる</tspan><tspan
+         sodipodi:role="line"
+         x="-266.2193"
+         y="156.4035"
+         style="stroke-width:0.26458332"
+         id="tspan5070" /></text>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot5060"
+       style="font-style:normal;font-weight:normal;font-size:20px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       transform="scale(0.26458333)"><flowRegion
+         id="flowRegion5062"><rect
+           id="rect5064"
+           width="8"
+           height="368"
+           x="-8"
+           y="186.51968" /></flowRegion><flowPara
+         id="flowPara5066"></flowPara></flowRoot>    <path
+       style="fill:#ff0000;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Lend-9)"
+       d="m 186.26667,68.4 c 2.11667,0 46.56666,25.4 46.56666,25.4"
+       id="path4770-0"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.29166651px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="211.66666"
+       y="106.5"
+       id="text6211"><tspan
+         sodipodi:role="line"
+         id="tspan6209"
+         x="211.66666"
+         y="111.32775"
+         style="stroke-width:0.26458332" /></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.29166651px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="211.66666"
+       y="98.033333"
+       id="text6215"><tspan
+         sodipodi:role="line"
+         id="tspan6213"
+         x="211.66666"
+         y="98.033333"
+         style="stroke-width:0.26458332">toolbar2</tspan><tspan
+         sodipodi:role="line"
+         x="211.66666"
+         y="105.02915"
+         style="stroke-width:0.26458332"
+         id="tspan6217">・Paneの数(1,2縦,2横,4)を選べる</tspan><tspan
+         sodipodi:role="line"
+         x="211.66666"
+         y="112.02497"
+         style="stroke-width:0.26458332"
+         id="tspan6219">・設定ボタンをクリックすると，プログラムが終了し，jsonファイルが開く</tspan><tspan
+         sodipodi:role="line"
+         x="211.66666"
+         y="119.02079"
+         style="stroke-width:0.26458332"
+         id="tspan7116">・デフォルトでは，1</tspan></text>
+    <path
+       style="fill:#ff0000;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker6231)"
+       d="m 33.866666,64.166667 25.4,-25.4"
+       id="path6221"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.29166651px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="63.5"
+       y="38.766666"
+       id="text6265"><tspan
+         sodipodi:role="line"
+         id="tspan6263"
+         x="63.5"
+         y="38.766666"
+         style="stroke-width:0.26458332">titlebar</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.29166651px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="29.633333"
+       y="123.43333"
+       id="text6269"><tspan
+         sodipodi:role="line"
+         id="tspan6267"
+         x="29.633333"
+         y="128.26108"
+         style="stroke-width:0.26458332" /></text>
+    <path
+       style="fill:#ff0000;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker6231-0)"
+       d="M 118.53333,131.9 249.76667,170"
+       id="path6221-4"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.29166651px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="233.32489"
+       y="176.82008"
+       id="text6530"><tspan
+         sodipodi:role="line"
+         id="tspan6528"
+         x="233.32489"
+         y="176.82008"
+         style="stroke-width:0.26458332">PaneFrame</tspan><tspan
+         sodipodi:role="line"
+         x="233.32489"
+         y="183.8159"
+         style="stroke-width:0.26458332"
+         id="tspan6532">・すべてのPaneを管理する</tspan></text>
+    <rect
+       style="opacity:0.98000004;fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       id="rect6536"
+       width="126.1848"
+       height="88.761665"
+       x="50.799999"
+       y="199.63333" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.29166651px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="63.5"
+       y="212.33334"
+       id="text6540"><tspan
+         sodipodi:role="line"
+         id="tspan6538"
+         x="63.5"
+         y="217.16109"
+         style="stroke-width:0.26458332" /></text>
+    <path
+       style="fill:#000000;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 50.799999,208.1 H 177.8"
+       id="path6542"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.29166651px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="84.666664"
+       y="250.43333"
+       id="text6546"><tspan
+         sodipodi:role="line"
+         id="tspan6544"
+         x="84.666664"
+         y="250.43333"
+         style="stroke-width:0.26458332">&lt;画像&gt;</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.29166651px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="54.498795"
+       y="205.96185"
+       id="text6550"><tspan
+         sodipodi:role="line"
+         id="tspan6548"
+         x="54.498795"
+         y="205.96185"
+         style="stroke-width:0.26458332">赤外(日)</tspan></text>
+    <path
+       sodipodi:type="star"
+       style="opacity:0.98000004;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       id="path4768-2"
+       sodipodi:sides="3"
+       sodipodi:cx="67.73333"
+       sodipodi:cy="98.033333"
+       sodipodi:r1="21.166666"
+       sodipodi:r2="10.583333"
+       sodipodi:arg1="1.5707963"
+       sodipodi:arg2="2.6179939"
+       inkscape:flatsided="true"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="M 67.73333,119.2 49.402459,87.45 86.0642,87.449999 Z"
+       inkscape:transform-center-y="0.52916619"
+       transform="matrix(0.11060194,0,0,0.09999999,71.354395,193.53418)" />
+    <path
+       style="fill:#ff0000;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Lend-9-5)"
+       d="m 63.5,203.86667 c 2.11667,0 -59.2666667,46.56666 -59.2666667,46.56666"
+       id="path4770-0-0"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.29166651px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="-199.1104"
+       y="254.84798"
+       id="text6972"><tspan
+         sodipodi:role="line"
+         id="tspan6970"
+         x="-199.1104"
+         y="254.84798"
+         style="stroke-width:0.26458332">pane.toolbar</tspan><tspan
+         sodipodi:role="line"
+         x="-199.1104"
+         y="261.84381"
+         style="stroke-width:0.26458332"
+         id="tspan6974">・現在toolbar1で表示されている時刻以上の時刻の画像の中で，最も古い時刻の画像を表示する</tspan><tspan
+         sodipodi:role="line"
+         x="-199.1104"
+         y="268.83963"
+         style="stroke-width:0.26458332"
+         id="tspan6976">・</tspan></text>
+    <path
+       style="fill:#ff0000;stroke:#ff0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Lend-9-5-7)"
+       d="m 143.93333,199.63333 c 2.11667,0 -21.16666,118.53334 -21.16666,118.53334"
+       id="path4770-0-0-0"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.29166651px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="118.21369"
+       y="324.45221"
+       id="text7521"><tspan
+         sodipodi:role="line"
+         id="tspan7519"
+         x="118.21369"
+         y="324.45221"
+         style="stroke-width:0.26458332">pane</tspan></text>
+  </g>
+</svg>

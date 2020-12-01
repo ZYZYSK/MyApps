@@ -20,6 +20,10 @@
         "850相当温位"
     ],
     "resolution": "1920x1080",
+    "min_size": [
+        200,
+        200
+    ],
     "jma_path": "D:\\Cloud\\OneDrive - Ibaraki University\\Weather",
     "gpv_path": "D:\\Cloud\\OneDrive - Ibaraki University\\Weather_GPV",
     "toolbar_h": 30,
@@ -29,6 +33,7 @@
         "jma_list: JMAデータリスト",
         "gpv_list: GPVデータリスト",
         "resolution: 解像度",
+        "min_size: 最小ウィンドウサイズ",
         "jma_path: JMAデータへのパス",
         "gpv_path: GPVデータへのパス",
         "toolbar_h: ツールバーの高さ",
