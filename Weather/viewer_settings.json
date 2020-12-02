@@ -1,31 +1,31 @@
 {
     "window_title": "Weather Viewer",
-    "jma_list": [
-        "赤外(日本域)",
-        "赤外(全球)",
-        "可視(日本域)",
-        "可視(全球)",
-        "水蒸気(日本域)",
-        "水蒸気(全球)",
-        "レーダー(日本域)",
-        "天気図"
-    ],
-    "gpv_list": [
-        "300高度、風",
-        "500高度、気温",
-        "500高度、渦度、風",
-        "500気温/700湿数",
-        "850高度、気温",
-        "850気温、風/700鉛直流",
-        "850相当温位"
-    ],
+    "jma_path": "D:\\Cloud\\OneDrive - Ibaraki University\\Weather",
+    "jma_list": {
+        "赤外(日)": "infrared",
+        "赤外(全)": "infrared_earth",
+        "可視(日)": "visible",
+        "可視(全)": "visible_earth",
+        "水蒸気(日)": "watervapor",
+        "水蒸気(全)": "watervapor_earth",
+        "レーダー(日)": "radar",
+        "天気図": "weather_map"
+    },
+    "gpv_path": "D:\\Cloud\\OneDrive - Ibaraki University\\Weather_GPV",
+    "gpv_list": {
+        "300高度、風": "j300hw",
+        "500高度、気温": "j500ht",
+        "500高度、渦度、風": "j500hv",
+        "500気温/700湿数": "j500t700td",
+        "850高度、気温": "j850ht",
+        "850気温、風/700鉛直流": "j850tw700vv",
+        "850相当温位": "j850eptw"
+    },
     "resolution": "1920x1080",
     "min_size": [
         200,
         200
     ],
-    "jma_path": "D:\\Cloud\\OneDrive - Ibaraki University\\Weather",
-    "gpv_path": "D:\\Cloud\\OneDrive - Ibaraki University\\Weather_GPV",
     "toolbar_h": 30,
     "ctrlbar_h": 20,
     "__comment__": [

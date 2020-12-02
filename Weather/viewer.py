@@ -102,7 +102,8 @@ class ViewerBase(ttk.Frame):
 
         #toolpane: toolbar1とtoolbar2の統合フレーム
         self.toolpane = ttk.Frame(self.basepane)
-        self.toolpane.pack(anchor=tk.NW, expand=1, fill=tk.X, side=tk.TOP)
+        self.toolpane.pack(anchor=tk.NW, expand=0, fill=tk.X, side=tk.TOP)
+
         # toolbar1
         self.toolbar1 = ttk.Frame(self.toolpane)
         self.toolbar1.pack(anchor=tk.W, expand=1, fill=tk.X, padx=5, pady=5, side=tk.LEFT)
@@ -113,8 +114,15 @@ class ViewerBase(ttk.Frame):
         self.toolbar2.pack(anchor=tk.E, expand=0, fill=tk.NONE, padx=5, pady=5, side=tk.LEFT)
         self.set_toolbar2()
 
+        #allpane: paneの統合フレーム
+        self.allpane = ttk.Frame(self.basepane, relief='raised', borderwidth=1)
+        self.allpane.pack(anchor=tk.SW, expand=1, fill=tk.BOTH, side=tk.TOP)
+
         # pane格納用
         self.panes = []
+
+        # 最初は全画面表示
+        self.set_pane1()
 
     def set_toolbar1_disabled(self):  # toolbar1(非アクティブ)
         # 「日時を戻す」ボタン
@@ -159,11 +167,34 @@ class ViewerBase(ttk.Frame):
         self.btn_setting.pack()
 
     def set_pane1(self):  # 全画面表示
-        # 以前のpanesの処理
-        for pane in self.panes:
+        # 起動時の場合
+        if len(self.panes) == 0:
+            self.panes.append(OnePane(0, 0, self.settings, self.allpane))
+
+        # 前回の表示が2画面以上の場合
+        elif len(self.panes) > 1:
             pass
 
 
-class OnePane():  # 1つのPaneウィンドウ
-    def __init__(self):
-        pass
+class OnePane(ttk.Frame):  # 1つのPaneFrameクラス
+    def __init__(self, column, row, settings, master=None):
+        # Frame
+        super().__init__(master)
+        master.columnconfigure(column, weight=1)
+        master.rowconfigure(row, weight=1)
+        self.grid(column=column, row=row, sticky=tk.W + tk.E + tk.N + tk.S)
+
+        # 画像の種類一覧
+        self.map_types = list(settings['jma_list'].keys()) + list(settings['gpv_list'].keys())
+        logging.warning(self.map_types)
+        if len(self.map_types) == 0:
+            exit_program("[エラー] 画像の種類(jma_list,gpv_list)の設定が正しくありません．")
+
+        #Toolbar: 画像の種類を指定できるCombobox
+        self.toolbar_text = tk.StringVar()
+        self.cb_toolbar = ttk.Combobox(self, textvariable=self.toolbar_text, values=self.map_types, height=10)
+        self.cb_toolbar.pack(anchor=tk.N, expand=0, fill=tk.X, side=tk.TOP)
+
+        #Canvas: 画像を載せる
+        self.canvas = tk.Canvas(self, bg='black')
+        self.canvas.pack(anchor=tk.N, expand=1, fill=tk.BOTH, padx=0, pady=0, side=tk.TOP)
