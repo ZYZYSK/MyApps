@@ -11,7 +11,7 @@ import sqlite3
 from .functions import exit_program, handler_sigint
 
 # ログ出力の無効化
-# logging.disable(logging.CRITICAL)
+logging.disable(logging.CRITICAL)
 # ログ出力設定
 logging.basicConfig(level=logging.WARNING, format='%(levelname)s: %(message)s')
 
@@ -20,10 +20,10 @@ def temperature_loader():
     # SIGINTシグナルを受け取る
     signal.signal(signal.SIGINT, handler_sigint)
     # 設定情報の取得
-    TemperatureLoader.get_settings()
+    Temperature.get_settings()
     # 読み込み
     try:
-        new_temperature = TemperatureLoader(sys.argv[1])
+        new_temperature = Temperature(sys.argv[1])
     except IndexError:
         exit_program("コマンドライン引数の第1引数が空なので，読み込めませんでした．")
     # 読み込むファイルのチェック
@@ -34,14 +34,16 @@ def temperature_loader():
     new_temperature.operate()
     # データベースへの格納
     new_temperature.insert()
+    # ログの出力
+    new_temperature.save_log()
 
 
-class TemperatureLoader():
+class Temperature():
     # 設定ファイルのパス
     settings_path = os.path.join(os.path.dirname(__file__), "temperature_settings.json")
     # 設定情報
     settings = None
-    #アイコンへのパス: app
+    # アイコンへのパス: app
     icn_app = os.path.join(os.path.dirname(__file__), 'icons', 'app.ico')
 
     @classmethod
@@ -64,6 +66,10 @@ class TemperatureLoader():
         self.load_file_path = load_file_path
         # 読み込むデータの格納先
         self.new_data = []
+        # 挿入できなかった日時とデータのリスト
+        self.error_data = []
+        # 補正が必要な日時かどうか
+        self.need_change = True
 
     def check_load_file(self):  # 読み込むファイルがtxt形式かどうかチェック
         # 読み込むファイルの拡張子をチェック
@@ -124,22 +130,65 @@ class TemperatureLoader():
 
     def insert(self):  # データベースへの格納
         # データベースへの接続
-        os.makedirs(os.path.dirname(self.settings["db_path"]), exist_ok=True)
+        try:
+            os.makedirs(os.path.dirname(self.settings["db_path"]), exist_ok=True)
+        # データベースへのパスが正しくない場合
+        except FileNotFoundError:
+            exit_program("{0}: \"db_path\"は有効なパスではありません．".format(self.settings_path))
+        except Exception as e:
+            exit_program(e, sys.exc_info())
         db = sqlite3.connect(self.settings["db_path"])
         cur = db.cursor()
         # 作成されていなければテーブルの作成
         cur.execute("CREATE TABLE IF NOT EXISTS Temperature(date text,time text,temperature real,PRIMARY KEY(date,time));")
         # データの挿入
-        for i in self.new_data:
+        for i in range(0, len(self.new_data)):
+            # 補正前のデータ保存用
+            old_data = 0
             # 各データの挿入
             try:
-                sentence = "INSERT INTO Temperature VALUES('{0}','{1}',{2});".format(i[0], i[1], i[2])
+                # 補正が必要なデータの場合
+                if self.need_change:
+                    # 今回追加する最初のデータだけ補正が必要
+                    self.need_change = False
+                    old_data = self.new_data[i][2]
+                    if i == 0 and i + 1 < len(self.new_data):
+                        self.new_data[i][2] = self.new_data[i + 1][2]
+                    elif i > 0 and i + 1 < len(self.new_data):
+                        self.new_data[i][2] = (self.new_data[i - 1][2] + self.new_data[i + 1][2]) / 2
+                # 挿入
+                sentence = "INSERT INTO Temperature VALUES('{0}','{1}',{2});".format(self.new_data[i][0], self.new_data[i][1], self.new_data[i][2])
                 logging.warning(sentence)
                 cur.execute(sentence)
             # 挿入できない場合(主キー制約など)
-            except sqlite3.IntegrityError:
-                print("({0},{1},{2})は挿入できませんでした．".format(i[0], i[1], i[2]))
+            except sqlite3.IntegrityError as e:
+                # 補正が必要なデータがまだ残っている
+                self.need_change = True
+                # 挿入失敗したデータの値を補正前の値に戻す
+                self.new_data[i][2] = old_data
+                self.error_data.append(self.new_data[i] + [e])
+            except Exception as e:
+                exit_program(e, sys.exc_info())
         # 変更をコミット
         db.commit()
         # 閉じる
         db.close()
+
+    def save_log(self):  # 変更したデータと挿入できなかったデータのリストを出力
+        # ログ出力先フォルダがなければ作成
+        try:
+            os.makedirs(self.settings["log_dir_path"], exist_ok=True)
+        except FileNotFoundError:
+            exit_program("{0}: \"log_path\"は有効なパスではありません．".format(self.settings_path))
+        except Exception as e:
+            exit_program(e, sys.exc_info())
+        # ログのファイル名
+        log_path = os.path.join(self.settings["log_dir_path"], "temperature_loader_{0}.log".format(datetime.datetime.now().strftime("%Y%m%d_%H%M%S")))
+        try:
+            with open(log_path, mode="w") as f:
+                # 変更したデータのリスト
+                for i in self.error_data:
+                    # 挿入したデータリスト
+                    f.write("[挿入に失敗したデータ:{3}] {0} {1}: {2}\n".format(i[0], i[1], i[2], i[3]))
+        except Exception as e:
+            exit_program(e, sys.exc_info())
