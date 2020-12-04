@@ -1,0 +1,32 @@
+Data Report
+File created on:2020-12-03 22:04:08
+
+Device Model:RC-5
+Serial Number:EFE199G00511
+Trip Description:RC-5 Data Logger
+Logging Interval:0:5:0
+Start Time:2020-11-01 07:50:07
+Press Button :Enable
+Storage Mode:N/A
+Alarm Tone:N/A
+Logging interval shortened in alarm:N/A
+Data Points:8086
+Mean Kinetic Temperature (MKT):14.7
+First Reading:2020-11-01 07:50:07
+Last Reading:2020-11-29 09:35:07
+Data Report
+File created on:2020-12-03 22:04:08
+
+Device Model:RC-5
+Serial Number:EFE199G00511
+Trip Description:RC-5 Data Logger
+Logging Interval:0:5:0
+Start Time:2020-11-01 07:50:07
+Press Button :Enable
+Storage Mode:N/A
+Alarm Tone:N/A
+Logging interval shortened in alarm:N/A
+Data Points:8086
+Mean Kinetic Temperature (MKT):14.7
+First Reading:2020-11-01 07:50:07
+Last Reading:2020-11-29 09:35:07

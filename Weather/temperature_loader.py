@@ -130,15 +130,16 @@ class TemperatureLoader():
         # 作成されていなければテーブルの作成
         cur.execute("CREATE TABLE IF NOT EXISTS Temperature(date text,time text,temperature real,PRIMARY KEY(date,time));")
         # データの挿入
-        for i in cur.execute("SELECT * FROM Temperature;"):
-            logging.warning(i)
         for i in self.new_data:
+            # 各データの挿入
             try:
                 sentence = "INSERT INTO Temperature VALUES('{0}','{1}',{2});".format(i[0], i[1], i[2])
                 logging.warning(sentence)
                 cur.execute(sentence)
+            # 挿入できない場合(主キー制約など)
             except sqlite3.IntegrityError:
                 print("({0},{1},{2})は挿入できませんでした．".format(i[0], i[1], i[2]))
+        # 変更をコミット
         db.commit()
-        cur.execute("SELECT * FROM Temperature;")
+        # 閉じる
         db.close()
