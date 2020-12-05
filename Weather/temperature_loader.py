@@ -31,6 +31,9 @@ def temperature_loader():
 
 
 class OpenDialog(ttk.Frame):
+    # アイコンへのパス: app_temp.ico
+    icn_app = os.path.join(os.path.dirname(__file__), 'icons', 'app_temp.ico')
+
     def __init__(self, master=None):
         # 初期設定
         super().__init__(master)
@@ -41,6 +44,8 @@ class OpenDialog(ttk.Frame):
         master.minsize(200, 50)
         # ルートウィンドウの設定: ウィンドウサイズ変更禁止
         master.resizable(0, 0)
+        # ルートウィンドウの設定: アイコン画像
+        master.iconbitmap(self.icn_app)
         # base_window
         self.basewindow = ttk.Frame(master)
         self.basewindow.pack(expand=0, fill=tk.NONE)
@@ -75,8 +80,6 @@ class Temperature():
     settings_path = os.path.join(os.path.dirname(__file__), "temperature_settings.json")
     # 設定情報
     settings = None
-    # アイコンへのパス: app
-    icn_app = os.path.join(os.path.dirname(__file__), 'icons', 'app.ico')
 
     @classmethod
     def get_settings(cls):  # 設定情報を取得する
