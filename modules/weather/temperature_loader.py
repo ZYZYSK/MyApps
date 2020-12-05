@@ -8,10 +8,11 @@ import json
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
+from tkinter import messagebox
 
 import sqlite3
 
-from .functions import exit_program, handler_sigint
+from ..functions import exit_program_tk, handler_sigint_tk
 
 # ログ出力の無効化
 logging.disable(logging.CRITICAL)
@@ -21,7 +22,7 @@ logging.basicConfig(level=logging.WARNING, format='%(levelname)s: %(message)s')
 
 def temperature_loader():
     # SIGINTシグナルを受け取る
-    signal.signal(signal.SIGINT, handler_sigint)
+    signal.signal(signal.SIGINT, handler_sigint_tk)
     # 設定情報の取得
     Temperature.get_settings()
     # 画面表示
@@ -38,6 +39,7 @@ class OpenDialog(ttk.Frame):
         # 初期設定
         super().__init__(master)
         self.pack()
+        self.master = master
         # ルートウィンドウの設定: タイトルバーの名前
         master.title("Temperature Loader")
         # ルートウィンドウの設定: 最小ウィンドウサイズ
@@ -64,13 +66,19 @@ class OpenDialog(ttk.Frame):
         # ファイルを開けたら
         if file:
             # 読み込み
-            new_temperature = Temperature(file)
+            new_temperature = Temperature(file, self.master)
             # 読み込み
             new_temperature.load()
             # データの加工
             new_temperature.operate()
             # データベースへの格納
             new_temperature.insert()
+            # メッセージボックスの表示
+            if new_temperature.changed:
+                messagebox.showinfo("情報", "{0}に書き込みました．\n詳しくは\"{1}\"を参照してください．".format(new_temperature.settings["db_path"], new_temperature.settings["log_dir_path"]))
+            else:
+                messagebox.showerror("エラー", "{0}に何も書き込みませんでした．\n詳しくは\"{1}\"を参照してください．".format(new_temperature.settings["db_path"], new_temperature.settings["log_dir_path"]))
+
             # ログの出力
             new_temperature.save_log()
 
@@ -90,13 +98,15 @@ class Temperature():
 
         # 設定ファイルが存在しない場合
         except FileNotFoundError:
-            ("[エラー] 設定ファイルが見つかりません: {0}".format(cls.settings_path))
+            exit_program_tk("エラー", "設定ファイル\"{0}\"が見つかりません".format(cls.settings_path))
 
         # ファイルオープンエラー
         except Exception as e:
-            exit_program(e, sys.exc_info())
+            exit_program_tk("エラー", "{0}\n{1}".format(e, sys.exc_info()))
 
-    def __init__(self, file_object):
+    def __init__(self, file_object, master=None):
+        # ルートウィンドウ
+        self.master = master
         # 読み込むファイルの内容
         self.file_object = file_object
         # 読み込むデータの格納先
@@ -105,6 +115,8 @@ class Temperature():
         self.error_data = []
         # 補正が必要な日時かどうか
         self.need_change = True
+        # データベースに書き込まれたかどうか
+        self.changed = False
 
     def load(self):  # 読み込みの開始
         # 読み込み
@@ -120,15 +132,15 @@ class Temperature():
                     except ValueError:
                         pass
                     except Exception as e:
-                        exit_program(e, sys.exc_info())
+                        exit_program_tk("エラー", "{0}\n{1}".format(e, sys.exc_info()), self.master)
                     # 数値であれば格納する
                     else:
                         self.new_data.append(new_i[1:])
         # ファイルを読み込めない場合
         except IndexError:
-            exit_program("ファイルを正しく読み込めません．")
+            exit_program_tk("エラー", "txtファイルを正しく読み込めません．", self.master)
         except Exception as e:
-            exit_program(e, sys.exc_info())
+            exit_program_tk("エラー", "{0}\n{1}".format(e, sys.exc_info()), self.master)
 
     def operate(self):  # 読み込んだデータの加工
         for data in self.new_data:
@@ -146,7 +158,7 @@ class Temperature():
                 # 温度を文字列から小数に変換
                 data[2] = float(data[2])
             except Exception as e:
-                exit_program(e, sys.exc_info())
+                exit_program_tk("エラー", "{0}\n{1}".format(e, sys.exc_info()), self.master)
 
     def insert(self):  # データベースへの格納
         # データベースへの接続
@@ -154,9 +166,9 @@ class Temperature():
             os.makedirs(os.path.dirname(self.settings["db_path"]), exist_ok=True)
         # データベースへのパスが正しくない場合
         except FileNotFoundError:
-            exit_program("{0}: \"db_path\"は有効なパスではありません．".format(self.settings_path))
+            exit_program_tk("エラー", "{0}: \"db_path\"は有効なパスではありません．".format(self.settings_path))
         except Exception as e:
-            exit_program(e, sys.exc_info())
+            exit_program_tk("エラー", "{0}\n{1}".format(e, sys.exc_info()), self.master)
         self.db = sqlite3.connect(self.settings["db_path"])
         self.cur = self.db.cursor()
         # 作成されていなければテーブルの作成
@@ -188,7 +200,10 @@ class Temperature():
                 except sqlite3.IntegrityError as e:
                     self.error_data.append(self.new_data[i] + [e])
                 except Exception as e:
-                    exit_program(e, sys.exc_info())
+                    exit_program_tk("エラー", "{0}\n{1}".format(e, sys.exc_info()), self.master)
+                else:
+                    # 書き込み操作が行われた
+                    self.changed = True
         # 変更をコミット
         self.db.commit()
         # 閉じる
@@ -210,9 +225,9 @@ class Temperature():
         try:
             os.makedirs(self.settings["log_dir_path"], exist_ok=True)
         except FileNotFoundError:
-            exit_program("{0}: \"log_path\"は有効なパスではありません．".format(self.settings_path))
+            messagebox.showerror("エラー", "{0}: \"log_dir_path\"は有効なパスではありません．".format(self.settings_path))
         except Exception as e:
-            exit_program(e, sys.exc_info())
+            exit_program_tk("エラー", "{0}\n{1}".format(e, sys.exc_info()), self.master)
         # ログのファイル名
         log_path = os.path.join(self.settings["log_dir_path"], "temperature_loader_{0}.log".format(datetime.datetime.now().strftime("%Y%m%d_%H%M%S")))
         try:
@@ -222,4 +237,4 @@ class Temperature():
                     # 挿入したデータリスト
                     f.write("[挿入に失敗したデータ:{3}] {0} {1}: {2}\n".format(i[0], i[1], i[2], i[3]))
         except Exception as e:
-            exit_program(e, sys.exc_info())
+            messagebox.showwarning("警告", "ログが正しく出力されませんでした．\n{0}\n{1}".format(e, sys.exc_info()))

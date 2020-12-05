@@ -1,5 +1,6 @@
 import os
 import sys
+from tkinter import messagebox
 
 
 def exit_program(e, info=None):  # プログラムの終了
@@ -15,5 +16,16 @@ def exit_program(e, info=None):  # プログラムの終了
             sys.exit()
 
 
+def exit_program_tk(error_title, error_content, master=None):  # プログラムの終了(tkinter)
+    messagebox.showerror(error_title, error_content)
+    if master:
+        master.destroy()
+    sys.exit()
+
+
 def handler_sigint(signal, frame):  # SIGINTシグナルハンドラ
     exit_program("SIGINTシグナルが送信されました．")
+
+
+def handler_sigint_tk(signal, frame):  # SIGINTシグナルハンドラ(tkinter)
+    exit_program_tk("エラー", "SIGINTシグナルが送信されました")

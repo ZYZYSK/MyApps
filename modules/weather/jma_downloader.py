@@ -9,7 +9,7 @@ import logging
 import signal
 
 
-from .functions import exit_program, handler_sigint, file_is_on_server
+from ..functions import exit_program, handler_sigint, file_is_on_server
 
 # ログ出力の無効化
 # logging.disable(logging.CRITICAL)

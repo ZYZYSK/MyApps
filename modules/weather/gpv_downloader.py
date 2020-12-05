@@ -19,7 +19,7 @@ import metpy.calc as mpcalc
 from scipy.ndimage import gaussian_filter
 import pygrib as grib
 
-from .functions import exit_program, handler_sigint
+from ..functions import exit_program, handler_sigint
 
 
 def gpv_downloader():

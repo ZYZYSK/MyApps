@@ -2,10 +2,12 @@ import os
 import sys
 import datetime
 import signal
+from tkinter import filedialog
+import tkinter as tk
 
 import cv2
 
-from .functions import exit_program, handler_sigint
+from ..functions import exit_program, handler_sigint
 
 
 def jma_maker():
@@ -69,14 +71,12 @@ class JmaMaker:
     @classmethod
     def move_path(cls):  # 画像の保存場所に移動
         while True:
-            print('移動先(current:カレントディレクトリ):', end='')
-            path = input()
-            if path == 'current':
-                path = os.getcwd()
+            root = tk.Tk()
+            root.withdraw()
+            path = filedialog.askdirectory(title="JMA画像の保存場所...", initialdir=os.path.dirname(__file__))
+            root.destroy()
             try:
                 os.chdir(path)
-            except FileNotFoundError:
-                print("移動先が見つかりません")
             except Exception as e:
                 exit_program(e, sys.exc_info())
             else:
@@ -99,16 +99,12 @@ class JmaMaker:
     @classmethod
     def save_path(cls):  # 保存先の指定
         while True:
-            print('保存先(current:カレントディレクトリ):', end='')
-            cls.path = input()
-            if cls.path == 'current':
-                cls.path = os.getcwd()
-            try:
-                os.makedirs(cls.path, exist_ok=True)
-            except FileNotFoundError:
-                print("保存先が正しくありません")
-            except Exception as e:
-                exit_program(e, sys.exc_info())
+            root = tk.Tk()
+            root.withdraw()
+            cls.path = filedialog.askdirectory(title="動画の保存先...", initialdir=os.path.dirname(__file__))
+            root.destroy()
+            if cls.path == '':
+                exit_program("キャンセルされました")
             else:
                 print(cls.path + 'に保存します')
                 break

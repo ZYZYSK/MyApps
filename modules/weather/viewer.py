@@ -6,7 +6,7 @@ import sys
 import logging
 import signal
 
-from .functions import exit_program, handler_sigint
+from ..functions import exit_program, handler_sigint
 
 # ログ出力の無効化
 # logging.disable(logging.CRITICAL)
