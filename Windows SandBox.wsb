@@ -1,0 +1,12 @@
+<Configuration><VGpu>Default</VGpu>
+    <Networking>Default</Networking>
+    <MappedFolders>
+        <MappedFolder>
+            <HostFolder>D:\Downloads</HostFolder>
+            <ReadOnly>false</ReadOnly>
+        </MappedFolder>
+    </MappedFolders>
+    <LogonCommand>
+        <Command></Command>
+    </LogonCommand>
+</Configuration>
