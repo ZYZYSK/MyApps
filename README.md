@@ -1,42 +1,28 @@
 # 事前設定
-* システム環境変数
+1. システム環境変数
    - 変数：MYAPPS
    - 値：このディレクトリのパス
-* Sleeperをスタートに登録する
-* SleeptimeChangerをスタートに登録する
-
+2. 「shortcurs」内のファイルをスタートフォルダに入れる
+3. 最初は，ショートカットファイルに設定したキーボードショートカットが動作しないことが多いので，確認する
+4. 「task_scheduler」内のファイルをタスクスケジューラに登録する
+***
+---
+___
 # module
 ## weather
-* 気象関係のプログラム
-* jma_downloader: JMA画像をダウンロード
-* gpv_downloader: GPV画像をダウンロード
-* jma_maker: JMA画像から動画を作成
-* viewer(未完成): JMA画像，GPV画像を見る
-* temperature_loader: 気温計からデータをロード
-* temperature_viewer(未完成): 気温計からロードしたデータを見る
-
-
-## PCManager
-* PCのクリーンアップと診断，アップデートなどを行います 
-* タスクスケジューラで30日に1回自動起動
-
-## Weather_DL
-* 気象衛星画像，天気図，レーダー，高層天気図をダウンロードします 
-* タスクスケジューラでログオン時に自動起動
-* GPV_dlが動作しない場合，環境変数"GRIB_DEFINITION_PATH"の設定に問題があると思われる
-
-## Temperature Loader
-* 気温計からデータをロードします
-
-## Weather
-* 気象関係のプログラム
-
-## Sleeper
-* ショートカットからスリープします 
-
-## SleeptimeChanger
-* スリープまでの時間を変更します
-
-## ThemeChanger
-* 指定された時間にダークモードとライトモードを切り替えます 
-* タスクスケジューラでログオン時，指定された時間に自動起動
+### 気象関係のプログラム
+[x] jma_downloader: JMA画像をダウンロード
+[x] gpv_downloader: GPV画像をダウンロード
+   * 動作しない場合，環境変数"GRIB_DEFINITION_PATH"の設定に問題があると思われる
+[x] jma_maker: JMA画像から動画を作成
+[ ] viewer(未完成): JMA画像，GPV画像を見る
+[x] temperature_loader: 気温計からデータをロード
+[ ] temperature_viewer(未完成): 気温計からロードしたデータを見る
+## pcmanager
+[x] PCの管理などを行う
+## sleep
+[x] sleeper: ワンスリープ
+[x] sleep_time_changer: スリープまでの時間を変更
+## others
+[x] usv: USVに接続
+[x] theme_changer: 6:00と18:00にライトテーマとダークテーマを切り替え
