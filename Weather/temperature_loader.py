@@ -5,6 +5,9 @@ import logging
 import signal
 import datetime
 import json
+import tkinter as tk
+from tkinter import ttk
+from tkinter import filedialog
 
 import sqlite3
 
@@ -21,21 +24,50 @@ def temperature_loader():
     signal.signal(signal.SIGINT, handler_sigint)
     # 設定情報の取得
     Temperature.get_settings()
-    # 読み込み
-    try:
-        new_temperature = Temperature(sys.argv[1])
-    except IndexError:
-        exit_program("コマンドライン引数の第1引数が空なので，読み込めませんでした．")
-    # 読み込むファイルのチェック
-    new_temperature.check_load_file()
-    # 読み込み
-    new_temperature.load()
-    # データの加工
-    new_temperature.operate()
-    # データベースへの格納
-    new_temperature.insert()
-    # ログの出力
-    new_temperature.save_log()
+    # 画面表示
+    win = tk.Tk()
+    app = OpenDialog(master=win)
+    app.mainloop()
+
+
+class OpenDialog(ttk.Frame):
+    def __init__(self, master=None):
+        # 初期設定
+        super().__init__(master)
+        self.pack()
+        # ルートウィンドウの設定: タイトルバーの名前
+        master.title("Temperature Loader")
+        # ルートウィンドウの設定: 最小ウィンドウサイズ
+        master.minsize(200, 50)
+        # ルートウィンドウの設定: ウィンドウサイズ変更禁止
+        master.resizable(0, 0)
+        # base_window
+        self.basewindow = ttk.Frame(master)
+        self.basewindow.pack(expand=0, fill=tk.NONE)
+        # 文字の大きさ
+        self.btn_style = ttk.Style()
+        self.btn_style.configure("BtnStyle.TButton", font=('Yu Gothic', 20))
+        # 「開く」ボタン
+        self.btn = ttk.Button(self.basewindow, text="Open...(O)", style="BtnStyle.TButton")
+        self.btn.pack()
+        # ボタン設定
+        master.bind(sequence="<Key-o>", func=self.set_btn)
+        self.btn.bind(sequence="<ButtonRelease-1>", func=self.set_btn)
+
+    def set_btn(self, event):  # ファイルを開き，内容をデータベースに格納する
+        file = filedialog.askopenfile(initialdir=os.path.dirname(__file__), filetypes=[("テキストファイル", "*.txt")])
+        # ファイルを開けたら
+        if file:
+            # 読み込み
+            new_temperature = Temperature(file)
+            # 読み込み
+            new_temperature.load()
+            # データの加工
+            new_temperature.operate()
+            # データベースへの格納
+            new_temperature.insert()
+            # ログの出力
+            new_temperature.save_log()
 
 
 class Temperature():
@@ -61,9 +93,9 @@ class Temperature():
         except Exception as e:
             exit_program(e, sys.exc_info())
 
-    def __init__(self, load_file_path):
-        # 読み込むファイルのパス
-        self.load_file_path = load_file_path
+    def __init__(self, file_object):
+        # 読み込むファイルの内容
+        self.file_object = file_object
         # 読み込むデータの格納先
         self.new_data = []
         # 挿入できなかった日時とデータのリスト
@@ -71,39 +103,24 @@ class Temperature():
         # 補正が必要な日時かどうか
         self.need_change = True
 
-    def check_load_file(self):  # 読み込むファイルがtxt形式かどうかチェック
-        # 読み込むファイルの拡張子をチェック
-        is_txt = re.search('.+\.txt', self.load_file_path)
-        logging.warning(self.load_file_path)
-        # txt形式の場合
-        if is_txt:
-            logging.warning("正しく読み込めました．")
-        # txt形式でない場合
-        else:
-            exit_program("指定したファイルはtxt形式ではないため，読み込めませんでした．")
-
     def load(self):  # 読み込みの開始
         # 読み込み
         try:
-            with open(self.load_file_path, mode="r", encoding="iso8859_2") as f:
-                l = [i.strip() for i in f.readlines()]
-                for i in l:
-                    new_i = i.split()
-                    if len(new_i) == 4:
-                        # 各行の先頭の文字(空白を除く)
-                        try:
-                            integer = int(new_i[0])
-                        # 数値でなければ格納しない
-                        except ValueError:
-                            pass
-                        except Exception as e:
-                            exit_program(e, sys.exc_info())
-                        # 数値であれば格納する
-                        else:
-                            self.new_data.append(new_i[1:])
-        # ファイルを開けない場合
-        except FileNotFoundError:
-            exit_program("指定されたファイルが存在しません．")
+            l = [i.strip() for i in self.file_object.readlines()]
+            for i in l:
+                new_i = i.split()
+                if len(new_i) == 4:
+                    # 各行の先頭の文字(空白を除く)
+                    try:
+                        integer = int(new_i[0])
+                    # 数値でなければ格納しない
+                    except ValueError:
+                        pass
+                    except Exception as e:
+                        exit_program(e, sys.exc_info())
+                    # 数値であれば格納する
+                    else:
+                        self.new_data.append(new_i[1:])
         # ファイルを読み込めない場合
         except IndexError:
             exit_program("ファイルを正しく読み込めません．")
@@ -137,42 +154,53 @@ class Temperature():
             exit_program("{0}: \"db_path\"は有効なパスではありません．".format(self.settings_path))
         except Exception as e:
             exit_program(e, sys.exc_info())
-        db = sqlite3.connect(self.settings["db_path"])
-        cur = db.cursor()
+        self.db = sqlite3.connect(self.settings["db_path"])
+        self.cur = self.db.cursor()
         # 作成されていなければテーブルの作成
-        cur.execute("CREATE TABLE IF NOT EXISTS Temperature(date text,time text,temperature real,PRIMARY KEY(date,time));")
+        self.cur.execute("CREATE TABLE IF NOT EXISTS Temperature(date text,time text,temperature real,PRIMARY KEY(date,time));")
         # データの挿入
         for i in range(0, len(self.new_data)):
-            # 補正前のデータ保存用
-            old_data = 0
-            # 各データの挿入
-            try:
-                # 補正が必要なデータの場合
-                if self.need_change:
-                    # 今回追加する最初のデータだけ補正が必要
-                    self.need_change = False
-                    old_data = self.new_data[i][2]
-                    if i == 0 and i + 1 < len(self.new_data):
-                        self.new_data[i][2] = self.new_data[i + 1][2]
-                    elif i > 0 and i + 1 < len(self.new_data):
-                        self.new_data[i][2] = (self.new_data[i - 1][2] + self.new_data[i + 1][2]) / 2
-                # 挿入
-                sentence = "INSERT INTO Temperature VALUES('{0}','{1}',{2});".format(self.new_data[i][0], self.new_data[i][1], self.new_data[i][2])
-                logging.warning(sentence)
-                cur.execute(sentence)
-            # 挿入できない場合(主キー制約など)
-            except sqlite3.IntegrityError as e:
-                # 補正が必要なデータがまだ残っている
-                self.need_change = True
-                # 挿入失敗したデータの値を補正前の値に戻す
-                self.new_data[i][2] = old_data
-                self.error_data.append(self.new_data[i] + [e])
-            except Exception as e:
-                exit_program(e, sys.exc_info())
+            # 重複がある場合
+            if self.is_conflict(self.new_data[i][0], self.new_data[i][1]):
+                # エラーリストに追加
+                self.error_data.append(self.new_data[i] + ["重複エラー"])
+            # 重複がない場合
+            else:
+                logging.warning("重複なし")
+                # 各データの挿入
+                try:
+                    # 補正が必要なデータの場合
+                    if self.need_change:
+                        # 今回追加する最初のデータだけ補正が必要
+                        self.need_change = False
+                        old_data = self.new_data[i][2]
+                        if i == 0 and i + 1 < len(self.new_data):
+                            self.new_data[i][2] = self.new_data[i + 1][2]
+                        elif i > 0 and i + 1 < len(self.new_data):
+                            self.new_data[i][2] = (self.new_data[i - 1][2] + self.new_data[i + 1][2]) / 2
+                    # 挿入
+                    sql = "INSERT INTO Temperature VALUES('{0}','{1}',{2});".format(self.new_data[i][0], self.new_data[i][1], self.new_data[i][2])
+                    self.cur.execute(sql)
+                # 挿入できない場合(NULL制約など)
+                except sqlite3.IntegrityError as e:
+                    self.error_data.append(self.new_data[i] + [e])
+                except Exception as e:
+                    exit_program(e, sys.exc_info())
         # 変更をコミット
-        db.commit()
+        self.db.commit()
         # 閉じる
-        db.close()
+        self.db.close()
+
+    def is_conflict(self, data_date, data_time):  # 重複確認
+        # 重複を検索
+        sql = "SELECT * FROM Temperature WHERE date='{0}' AND time='{1}'".format(data_date, data_time)
+        self.cur = self.db.execute(sql)
+        # 重複があればTrue
+        if len(self.cur.fetchall()):
+            return True
+        # 重複がなければFalse
+        else:
+            return False
 
     def save_log(self):  # 変更したデータと挿入できなかったデータのリストを出力
         # ログ出力先フォルダがなければ作成
