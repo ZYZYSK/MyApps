@@ -35,7 +35,13 @@ function ChangeVSCodeTheme(){
 }
 #Inkscapeテーマ変更
 function ChangeInkscapeTheme(){
-    `sed -i.bak "s/defaultTheme=\".*\"/defaultTheme=\"$1\"/" "$HOME/.config/inkscape/preferences.xml"`
+    if [ "$(pgrep inkscape | wc -l)" -ge 1 ]
+    then
+        killall inkscape
+        sleep 1
+    fi
+    `sed -i "s/defaultTheme=\".*\"/defaultTheme=\"$1\"/" "$HOME/.config/inkscape/preferences.xml"`
+    `sed -i.bak "s/gtkTheme=\".*\"/gtkTheme=\"$1\"/" "$HOME/.config/inkscape/preferences.xml"`
 }
 #Android Studioテーマ変更
 function ChangeAndroidStudioTheme(){
