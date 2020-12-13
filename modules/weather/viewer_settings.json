@@ -1,6 +1,6 @@
 {
     "window_title": "Weather Viewer",
-    "jma_path": "D:\\Cloud\\OneDrive - Ibaraki University\\Weather",
+    "jma_path": "/mnt/d/Weather",
     "jma_list": {
         "赤外(日)": "infrared",
         "赤外(全)": "infrared_earth",
@@ -11,7 +11,7 @@
         "レーダー(日)": "radar",
         "天気図": "weather_map"
     },
-    "gpv_path": "D:\\Cloud\\OneDrive - Ibaraki University\\Weather_GPV",
+    "gpv_path": "/mnt/d/Weather",
     "gpv_list": {
         "300高度、風": "j300hw",
         "500高度、気温": "j500ht",

@@ -185,7 +185,7 @@ class GpvDownloader:
         job_list = []
 
         # ダウンロード[並列処理]
-        with futures.ProcessPoolExecutor(max_workers=5) as executor:
+        with futures.ProcessPoolExecutor(max_workers=2) as executor:
             while time.date() < cls.time_end:
                 job_list.append(executor.submit(cls.download_grib2_sub, time=time))
                 # 日時を進める

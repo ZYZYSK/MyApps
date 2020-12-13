@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=JMA Maker
+Comment=Make a video from JMA Satellite images
+Exec=gnome-terminal -x bash -i -c "conda activate weather; python $MYAPPS_PATH/Weather\ JMA\ Maker.py"
+Icon=/mnt/d/Projects/MyApps/modules/weather/icons/jma_maker/app.png
+Terminal=false
+Categories=Science

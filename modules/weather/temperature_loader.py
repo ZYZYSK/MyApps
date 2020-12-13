@@ -33,7 +33,7 @@ def temperature_loader():
 
 class OpenDialog(ttk.Frame):
     # アイコンへのパス: app_temp.ico
-    icn_app = os.path.join(os.path.dirname(__file__), 'icons', 'app_temp.ico')
+    icn_app = os.path.join(os.path.dirname(__file__), 'icons', 'temperature_loader', 'app_temp.ico')
 
     def __init__(self, master=None):
         # 初期設定
@@ -47,13 +47,14 @@ class OpenDialog(ttk.Frame):
         # ルートウィンドウの設定: ウィンドウサイズ変更禁止
         master.resizable(0, 0)
         # ルートウィンドウの設定: アイコン画像
-        master.iconbitmap(self.icn_app)
+        # ubuntu 20.04では使えなかった
+        # master.iconbitmap(self.icn_app)
         # base_window
         self.basewindow = ttk.Frame(master)
         self.basewindow.pack(expand=0, fill=tk.NONE)
         # 文字の大きさ
         self.btn_style = ttk.Style()
-        self.btn_style.configure("BtnStyle.TButton", font=('Yu Gothic', 20))
+        self.btn_style.configure("BtnStyle.TButton", font=('MS Gothic', 20))
         # 「開く」ボタン
         self.btn = ttk.Button(self.basewindow, text="Open...(O)", style="BtnStyle.TButton")
         self.btn.pack()
@@ -61,8 +62,8 @@ class OpenDialog(ttk.Frame):
         master.bind(sequence="<Key-o>", func=self.set_btn)
         self.btn.bind(sequence="<ButtonRelease-1>", func=self.set_btn)
 
-    def set_btn(self, event):  # ファイルを開き，内容をデータベースに格納する
-        file = filedialog.askopenfile(initialdir=os.path.dirname(__file__), filetypes=[("テキストファイル", "*.txt")])
+    def set_btn(self, event):  # ファイルを開き，ファイル名をデータベースに格納する
+        file = filedialog.askopenfilename(initialdir=os.path.dirname(__file__), filetypes=[("テキストファイル", "*.txt")])
         # ファイルを開けたら
         if file:
             # 読み込み
@@ -104,11 +105,11 @@ class Temperature():
         except Exception as e:
             exit_program_tk("エラー", "{0}\n{1}".format(e, sys.exc_info()))
 
-    def __init__(self, file_object, master=None):
+    def __init__(self, file_name, master=None):
         # ルートウィンドウ
         self.master = master
         # 読み込むファイルの内容
-        self.file_object = file_object
+        self.file_name = file_name
         # 読み込むデータの格納先
         self.new_data = []
         # 挿入できなかった日時とデータのリスト
@@ -121,21 +122,22 @@ class Temperature():
     def load(self):  # 読み込みの開始
         # 読み込み
         try:
-            l = [i.strip() for i in self.file_object.readlines()]
-            for i in l:
-                new_i = i.split()
-                if len(new_i) == 4:
-                    # 各行の先頭の文字(空白を除く)
-                    try:
-                        integer = int(new_i[0])
-                    # 数値でなければ格納しない
-                    except ValueError:
-                        pass
-                    except Exception as e:
-                        exit_program_tk("エラー", "{0}\n{1}".format(e, sys.exc_info()), self.master)
-                    # 数値であれば格納する
-                    else:
-                        self.new_data.append(new_i[1:])
+            with open(self.file_name, mode='r', encoding='iso8859_2') as f:
+                l = [i.strip() for i in f.readlines()]
+                for i in l:
+                    new_i = i.split()
+                    if len(new_i) == 4:
+                        # 各行の先頭の文字(空白を除く)
+                        try:
+                            integer = int(new_i[0])
+                        # 数値でなければ格納しない
+                        except ValueError:
+                            pass
+                        except Exception as e:
+                            exit_program_tk("エラー", "{0}\n{1}".format(e, sys.exc_info()), self.master)
+                        # 数値であれば格納する
+                        else:
+                            self.new_data.append(new_i[1:])
         # ファイルを読み込めない場合
         except IndexError:
             exit_program_tk("エラー", "txtファイルを正しく読み込めません．", self.master)

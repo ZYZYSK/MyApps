@@ -36,19 +36,19 @@ class ViewerBase(ttk.Frame):
     # 設定情報
     settings = None
     #アイコンへのパス: app
-    icn_app = os.path.join(os.path.dirname(__file__), 'icons', 'app.ico')
+    icn_app = os.path.join(os.path.dirname(__file__), 'icons', 'viewer', 'app.ico')
 
     #アイコンへのパス: toolbar1
-    icn_time_change = os.path.join(os.path.dirname(__file__), 'icons', 'time_change.png')
-    icn_time_change_disabled = os.path.join(os.path.dirname(__file__), 'icons', 'time_change_disabled.png')
+    icn_time_change = os.path.join(os.path.dirname(__file__), 'icons', 'viewer', 'time_change.png')
+    icn_time_change_disabled = os.path.join(os.path.dirname(__file__), 'icons', 'viewer', 'time_change_disabled.png')
 
     # アイコンへのパス: toolbar2
-    icn_pane1 = os.path.join(os.path.dirname(__file__), 'icons', 'pane1.png')
-    icn_pane2v = os.path.join(os.path.dirname(__file__), 'icons', 'pane2v.png')
-    icn_pane2h = os.path.join(os.path.dirname(__file__), 'icons', 'pane2h.png')
-    icn_pane4 = os.path.join(os.path.dirname(__file__), 'icons', 'pane4.png')
-    icn_pane4 = os.path.join(os.path.dirname(__file__), 'icons', 'pane4.png')
-    icn_setting = os.path.join(os.path.dirname(__file__), 'icons', 'setting.png')
+    icn_pane1 = os.path.join(os.path.dirname(__file__), 'icons', 'viewer', 'pane1.png')
+    icn_pane2v = os.path.join(os.path.dirname(__file__), 'icons', 'viewer', 'pane2v.png')
+    icn_pane2h = os.path.join(os.path.dirname(__file__), 'icons', 'viewer', 'pane2h.png')
+    icn_pane4 = os.path.join(os.path.dirname(__file__), 'icons', 'viewer', 'pane4.png')
+    icn_pane4 = os.path.join(os.path.dirname(__file__), 'icons', 'viewer', 'pane4.png')
+    icn_setting = os.path.join(os.path.dirname(__file__), 'icons', 'viewer', 'setting.png')
 
     @classmethod
     def get_settings(cls):  # 設定情報を取得する
@@ -81,7 +81,8 @@ class ViewerBase(ttk.Frame):
         # ルートウィンドウの設定: 最小ウィンドウサイズ
         master.minsize(self.settings["min_size"][0], self.settings["min_size"][1])
         # ルートウィンドウの設定: アイコン画像
-        master.iconbitmap(self.icn_app)
+        # ubuntu20.04では使えなかった
+        # master.iconbitmap(self.icn_app)
 
         # アイコンの読み込み
         self.img_time_change = tk.PhotoImage(file=self.icn_time_change)

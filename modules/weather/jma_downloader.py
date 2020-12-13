@@ -50,7 +50,8 @@ def jma_downloader():
     logging.warning("ダウンロード準備完了")
 
     # ダウンロード
-    with futures.ProcessPoolExecutor(max_workers=len(jma_list)) as executor:
+    # with futures.ProcessPoolExecutor(max_workers=len(jma_list)) as executor:
+    with futures.ProcessPoolExecutor(max_workers=2) as executor:
         for i in jma_list:
             job_list.append(executor.submit(i.download_map))
         _ = futures.as_completed(fs=job_list)

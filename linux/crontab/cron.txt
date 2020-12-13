@@ -1,0 +1,10 @@
+#環境変数
+MYAPPS_PATH=/mnt/d/Projects/MyApps
+#メール送信
+MAILTO=root
+
+########## theme_changer
+# 6:00にライトモードに切り替え
+00 06 * * * "$MYAPPS_PATH/linux/bash/theme_changer.sh"
+#18:00にダークモードに切り替え
+00 18 * * * "$MYAPPS_PATH/linux/bash/theme_changer.sh"

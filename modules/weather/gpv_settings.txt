@@ -1,2 +1,2 @@
-D:\Cloud\OneDrive - Ibaraki University\Weather_GPV
-2020/12/04
+/mnt/d/Weather
+2020/12/12

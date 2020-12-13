@@ -12,9 +12,9 @@
    viewBox="0 0 7.9374999 7.9374999"
    version="1.1"
    id="svg8"
-   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   inkscape:version="1.0.1 (1.0.1+r74)"
    sodipodi:docname="pane1.svg"
-   inkscape:export-filename="D:\MyApps\weather\icons\pane1.png"
+   inkscape:export-filename="pane1.png"
    inkscape:export-xdpi="112"
    inkscape:export-ydpi="112">
   <defs
@@ -37,9 +37,9 @@
      fit-margin-right="0"
      fit-margin-bottom="0"
      inkscape:window-width="2560"
-     inkscape:window-height="1387"
-     inkscape:window-x="2552"
-     inkscape:window-y="-8"
+     inkscape:window-height="1321"
+     inkscape:window-x="2560"
+     inkscape:window-y="27"
      inkscape:window-maximized="1"
      inkscape:document-rotation="0" />
   <metadata
@@ -50,7 +50,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>

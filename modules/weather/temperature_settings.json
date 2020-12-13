@@ -1,5 +1,5 @@
 {
-    "db_path": "D:\\Cloud\\OneDrive\\Temperature\\temperature.db",
+    "db_path": "/mnt/d/Cloud/MEGA/Temperature/temperature.db",
     "interval": 5,
-    "log_dir_path": "D:\\Cloud\\OneDrive\\Temperature\\log"
+    "log_dir_path": "/mnt/d/Cloud/MEGA/Temperature/log"
 }

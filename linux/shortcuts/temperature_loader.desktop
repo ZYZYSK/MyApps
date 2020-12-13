@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Temperature Loader
+Comment=Load Data from Temperature Logger
+Exec=bash -i -c "conda activate weather; python $MYAPPS_PATH/Temperature\ Loader.py"
+Icon=/mnt/d/Projects/MyApps/modules/weather/icons/temperature_loader/app.png
+Terminal=false
+Categories=Science

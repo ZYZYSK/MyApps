@@ -1,0 +1,8 @@
+#環境変数
+MYAPPS_PATH=/mnt/d/Projects/MyApps
+#メール送信
+MAILTO=root
+
+########## shutdown
+# 0:01にシャットダウン
+01 00 * * * "$MYAPPS_PATH/linux/bash/shutdown.sh"
