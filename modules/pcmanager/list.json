@@ -3,6 +3,6 @@
     "システムクリーンアップ": "C:\\WINDOWS\\system32\\cleanmgr.exe",
     "CrystalDiskInfo": "C:\\Program Files\\CrystalDiskInfo\\DiskInfo64.exe",
     "スクリーンセーバー": "desk.cpl,1",
-    "アップデートと修復": "%MYAPPS%\\modules\\pcmanager\\admin.bat %MYAPPS%\\modules\\pcmanager\\updater.bat",
+    "アップデートと修復": "%MYAPPS_PATH%\\modules\\pcmanager\\admin.bat %MYAPPS_PATH%\\modules\\pcmanager\\updater.bat",
     "環境変数": "Start C:\\Windows\\system32\\rundll32.exe sysdm.cpl, EditEnvironmentVariables"
 }

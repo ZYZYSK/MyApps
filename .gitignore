@@ -14,3 +14,5 @@ __pycache__/
 tmp/
 test.py
 test1.py
+#各アプリの設定ファイル
+*.json
