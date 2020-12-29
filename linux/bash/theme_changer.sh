@@ -2,6 +2,7 @@
 #参考資料
 ### https://askubuntu.com/questions/742870/background-not-changing-using-gsettings-from-cron
 ### https://askubuntu.com/questions/1079361/change-gtk-theme-on-schedule-with-cron-ubuntu-18-04
+### https://kzmmtmt.pgw.jp/?p=1786
 #ダークテーマ
 system_dark="Yaru-dark"
 wps_dark="2019dark"
@@ -47,24 +48,27 @@ function ChangeInkscapeTheme(){
 function ChangeAndroidStudioTheme(){
     `sed -i.bak "s/global_color_scheme.*\"/global_color_scheme name=\"$1\"/" "$HOME/.config/Google/AndroidStudio4.1/options/colors.scheme.xml"`
 }
-
+#全体のテーマ変更
+function ChangeAllTheme(){
+    #時刻を比較
+    if [ ${current_time} -ge ${light_time} ] && [ ${current_time} -lt ${dark_time} ]
+    #ライトモード
+    then
+        ChangeSystemTheme "${system_light}"
+        ChangeWPSTheme "${wps_light}"
+        ChangeVSCodeTheme "${vscode_light}"
+        ChangeInkscapeTheme "${system_light}"
+        ChangeAndroidStudioTheme "${android_studio_light}"
+    #ダークモード
+    else
+        ChangeSystemTheme "${system_dark}"
+        ChangeWPSTheme "${wps_dark}"
+        ChangeVSCodeTheme "${vscode_dark}"
+        ChangeInkscapeTheme "${system_dark}"
+        ChangeAndroidStudioTheme "${android_studio_dark}"
+    fi
+}
 #cron実行用
 echo $HOME
 export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
-#時刻を比較
-if [ ${current_time} -ge ${light_time} ] && [ ${current_time} -lt ${dark_time} ]
-#ライトモード
-then
-    ChangeSystemTheme "${system_light}"
-    ChangeWPSTheme "${wps_light}"
-    ChangeVSCodeTheme "${vscode_light}"
-    ChangeInkscapeTheme "${system_light}"
-    ChangeAndroidStudioTheme "${android_studio_light}"
-#ダークモード
-else
-    ChangeSystemTheme "${system_dark}"
-    ChangeWPSTheme "${wps_dark}"
-    ChangeVSCodeTheme "${vscode_dark}"
-    ChangeInkscapeTheme "${system_dark}"
-    ChangeAndroidStudioTheme "${android_studio_dark}"
-fi
+ChangeAllTheme

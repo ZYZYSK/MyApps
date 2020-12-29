@@ -10,6 +10,11 @@ SleepTimeChanger(){
         #数値を入力した場合
         if expr "$suspend" : "[0-9]*$" > /dev/null;then
             `dconf write /org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-timeout $((suspend*60))`
+            if [ $suspend -ne 0 ]; then
+                `dconf write /org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-type "'suspend'"`
+            else
+                `dconf write /org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-type "'nothing'"`
+            fi
             echo "サスペンドまでの時間は${suspend}分に設定されました．"
             sleep 5
             break
