@@ -6,3 +6,12 @@ MAILTO=root
 ########## shutdown
 # 0:01にシャットダウン
 01 00 * * * "$MYAPPS_PATH/linux/bash/shutdown.sh"
+# スリープ解除設定(shutdown用)
+00 18 * * * sudo /usr/sbin/rtcwake -m no -u -t $(date +\%s -d '2359')
+@reboot sudo /usr/sbin/rtcwake -m no -u -t $(date +\%s -d '2359')
+# スリープ解除設定(theme_changer用)
+10 00 * * * sudo /usr/sbin/rtcwake -m no -u -t $(date +\%s -d '1759')
+@reboot sudo /usr/sbin/rtcwake -m no -u -t $(date +\%s -d '1759')
+# スリープ解除設定(テスト)
+# 30 20 * * * sudo /usr/sbin/rtcwake -m no -u -t $(date +\%s -d '2031')
+
