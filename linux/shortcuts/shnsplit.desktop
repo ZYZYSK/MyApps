@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=ShnSplit
+Comment=Split audio file with cue
+Exec=bash -i -c "python $MYAPPS_PATH/ShnSplit.py"
+Icon=/mnt/d/Projects/MyApps/modules/shnsplit/icon.png
+Terminal=false
+Categories=Science
